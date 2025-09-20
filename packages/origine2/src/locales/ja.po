@@ -233,7 +233,15 @@ msgstr "前のテキストボックス内の文を結合しない"
 msgid "不显示角色名"
 msgstr "キャラクター名は設定不可"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:234
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:210
+msgid "不能创建循环连接"
+msgstr ""
+
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:149
+msgid "不能创建循环连接！流程图必须是有向无环图。"
+msgstr ""
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:251
 msgid "不设定"
 msgstr "未設定"
 
@@ -354,6 +362,10 @@ msgstr "サイドバーゲームプレビュー"
 #: src/components/IconCreator/IconCreator.tsx:798
 msgid "保存"
 msgstr "セーブ"
+
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:201
+msgid "保存流程图"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:504
 msgid "保持闭眼(毫秒)"
@@ -577,7 +589,7 @@ msgid "删除游戏"
 msgstr "ゲームを削除"
 
 #: src/components/Assets/Assets.tsx:476
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:168
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:186
 msgid "刷新"
 msgstr "更新"
 
@@ -597,7 +609,7 @@ msgstr "機能区の表示"
 msgid "加粗"
 msgstr "太字"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:111
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:129
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:251
 msgid "动画"
 msgstr "アニメーション"
@@ -676,6 +688,7 @@ msgstr "ロゴ"
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:227
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:214
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:224
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:235
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:140
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:155
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:81
@@ -743,7 +756,7 @@ msgstr "ファイルエクスプローラーで開く"
 
 #: src/pages/dashboard/GameElement.tsx:97
 #: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:174
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:192
 msgid "在新标签页中预览"
 msgstr "新しいタブでプレビュー"
 
@@ -751,8 +764,8 @@ msgstr "新しいタブでプレビュー"
 msgid "在这里放置编辑组件"
 msgstr "ここにコンポーネントを配置"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:116
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:148
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:134
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:166
 msgid "场景"
 msgstr "シーン"
 
@@ -818,7 +831,7 @@ msgstr "位置決め方法"
 msgid "实时预览"
 msgstr "リアルタイムプレビュー"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:180
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:198
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:98
 msgid "实时预览关闭"
 msgstr "リアルタイムプレビューオフ"
@@ -827,7 +840,7 @@ msgstr "リアルタイムプレビューオフ"
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "リアルタイムプレビューはゲームを制限付きで早送りし、以前のシーンの効果はマッピングされません。"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:180
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:198
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:98
 msgid "实时预览打开"
 msgstr "リアルタイムプレビューオン"
@@ -926,6 +939,10 @@ msgstr "アバターを表示"
 msgid "属性"
 msgstr "プロパティ"
 
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:187
+msgid "工具栏"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:59
 msgid "左侧"
 msgstr "左"
@@ -1007,7 +1024,7 @@ msgstr "強度"
 msgid "当前版本"
 msgstr "現在のバージョン"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:240
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:257
 msgid "德语"
 msgstr "ドイツ語"
 
@@ -1042,6 +1059,14 @@ msgstr "この文まで実行"
 #: src/components/Assets/Assets.tsx:368
 msgid "扩展名"
 msgstr "拡張子"
+
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:207
+msgid "拖动节点调整位置"
+msgstr ""
+
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:209
+msgid "拖动连线创建连接"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:215
 msgid "拼接先前文本框内的语句"
@@ -1092,6 +1117,10 @@ msgstr "変更を送信"
 #: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
 msgid "提示"
 msgstr "ヒント"
+
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:204
+msgid "提示："
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:46
 msgid "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
@@ -1331,7 +1360,7 @@ msgstr "Null"
 msgid "无匹配选项"
 msgstr "一致するオプションがありません"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:238
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:255
 msgid "日语"
 msgstr "日本語"
 
@@ -1447,7 +1476,7 @@ msgid "根文本长度 (rem)"
 msgstr "ルートテキストの長さ (rem)"
 
 #: src/pages/dashboard/DashBoard.tsx:214
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:118
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:136
 msgid "模板"
 msgstr "テンプレート"
 
@@ -1494,7 +1523,7 @@ msgstr "このコマンドはすべてのゲームが終わるときに使用"
 msgid "永不换行"
 msgstr "折り返しなし"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:239
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:256
 msgid "法语"
 msgstr "フランス語"
 
@@ -1517,6 +1546,14 @@ msgstr "コメント"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Comment.tsx:22
 msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "コメントは編集時のみ表示され、ゲームプレイ時には非表示"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:229
+msgid "流程图功能"
+msgstr ""
+
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:112
+msgid "流程图编辑器"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:73
 msgid "淡入淡出"
@@ -1559,6 +1596,10 @@ msgstr "新しい行を追加"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/AddProperty.tsx:67
 msgid "添加自定义属性"
 msgstr "カスタム属性を追加"
+
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:194
+msgid "添加节点"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:275
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:71
@@ -1615,7 +1656,7 @@ msgstr "ゲーム概要"
 msgid "游戏识别码"
 msgstr "ゲームID"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:122
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:140
 msgid "游戏配置"
 msgstr "ゲーム構成"
 
@@ -1627,6 +1668,10 @@ msgstr "ソースコード"
 msgid "滤镜"
 msgstr "フィルター"
 
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:206
+msgid "点击\"添加节点\"创建新节点"
+msgstr ""
+
 #: src/components/Assets/Upload.tsx:49
 msgid "点击或拖拽文件至此上传"
 msgstr "ここまでクリックかドラッグでアップロードします"
@@ -1634,6 +1679,10 @@ msgstr "ここまでクリックかドラッグでアップロードします"
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:167
 msgid "点击或按退格键以删除旧的分隔符，输入新的分隔符后请按回车键确认。"
 msgstr "クリックまたはBackspaceキーで古い区切り文字を削除し、新しい区切り文字を入力してEnterキーで確定してください。"
+
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:208
+msgid "点击节点选择场景文件"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:100
 msgid "点状电影滤镜"
@@ -1648,7 +1697,7 @@ msgstr "特別演出"
 msgid "百分比。 0-100 有效"
 msgstr "百分率。 0-100 有効"
 
-#: src/pages/editor/MainArea/EditArea.tsx:56
+#: src/pages/editor/MainArea/EditArea.tsx:59
 msgid "目前没有打开任何文件"
 msgstr "現在開いているファイルはありません"
 
@@ -1692,7 +1741,7 @@ msgstr "ビュー"
 msgid "视觉小说编辑，再进化"
 msgstr "Galgame Editing. Redefined"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:120
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:138
 msgid "视频"
 msgstr "Video"
 
@@ -1710,6 +1759,7 @@ msgstr "動画のスキップを無効にする"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:215
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:225
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
 msgid "禁用"
 msgstr "無効化"
 
@@ -1717,7 +1767,7 @@ msgstr "無効化"
 msgid "立即注视"
 msgstr "即座に注視"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:115
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:133
 msgid "立绘"
 msgstr "Figure"
 
@@ -1745,7 +1795,7 @@ msgstr "関連する立ち絵のID"
 msgid "立绘文件"
 msgstr "立ち絵ファイル"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:235
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:252
 msgid "简体中文"
 msgstr "簡体字中国語"
 
@@ -1753,7 +1803,7 @@ msgstr "簡体字中国語"
 msgid "紧急回避"
 msgstr "緊急回避"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:137
 msgid "纹理"
 msgstr "Tex"
 
@@ -1842,6 +1892,10 @@ msgstr "編集アイコン"
 msgid "编辑模板"
 msgstr "テンプレートを編集"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:241
+msgid "编辑流程图"
+msgstr ""
+
 #: src/pages/dashboard/GameElement.tsx:88
 msgid "编辑游戏"
 msgstr "ゲームの編集"
@@ -1850,7 +1904,7 @@ msgstr "ゲームの編集"
 msgid "编辑组件"
 msgstr "コンポーネントの編集"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:253
 msgid "繁体中文"
 msgstr "繁体字中国語"
 
@@ -1873,7 +1927,7 @@ msgid "耗时"
 msgstr "時間がかかります"
 
 #: src/components/IconCreator/IconCreator.tsx:683
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:131
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:64
 msgid "背景"
 msgstr "Background"
@@ -1954,7 +2008,7 @@ msgstr "カスタムカスケードセレクター区切り文字"
 msgid "舞台对象控制"
 msgstr "ステージオブジェクトコントロール"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:237
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:254
 msgid "英语"
 msgstr "英語"
 
@@ -2082,7 +2136,7 @@ msgstr "カスタムカスケードセレクター区切り文字を設定（入
 msgid "该指令没有被识别，请打开脚本编辑模式以手动编辑"
 msgstr "このコマンドは認識されません、スクリプト編集モードで編集してくださいHere are the translations for the remaining strings:"
 
-#: src/pages/editor/MainArea/EditArea.tsx:42
+#: src/pages/editor/MainArea/EditArea.tsx:45
 msgid "该文件类型不支持预览"
 msgstr "このファイルタイプはプレビューをサポートしていません"
 
@@ -2093,7 +2147,7 @@ msgstr "このファイルタイプはプレビューをサポートしていま
 msgid "语言"
 msgstr "言語"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:121
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:139
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:232
 msgid "语音"
 msgstr "ボイス"
@@ -2126,7 +2180,7 @@ msgstr "シーンを呼び出す"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "シーンを呼び出し、新しいシーン終了後に親シーンに戻る"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:147
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:165
 msgid "资源"
 msgstr "アセット"
 
@@ -2214,7 +2268,7 @@ msgstr "アニメーションファイルを選択"
 msgid "选择图片"
 msgstr "画像を選択"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:369
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:386
 msgid "选择图片文件"
 msgstr "画像ファイルを選択"
 
@@ -2440,7 +2494,7 @@ msgstr "右寄せ"
 msgid "靠左"
 msgstr "左寄せ"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:114
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:132
 msgid "音乐"
 msgstr "BGM"
 
@@ -2533,7 +2587,7 @@ msgstr "デフォルト値は24時間"
 msgid "默认值50"
 msgstr "デフォルト値は50"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:229
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:246
 msgid "默认语言"
 msgstr "デフォルト言語"
 

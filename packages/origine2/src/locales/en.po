@@ -230,7 +230,15 @@ msgstr "No concat with previous text"
 msgid "不显示角色名"
 msgstr "Hide the role name"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:234
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:210
+msgid "不能创建循环连接"
+msgstr ""
+
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:149
+msgid "不能创建循环连接！流程图必须是有向无环图。"
+msgstr ""
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:251
 msgid "不设定"
 msgstr "Not set"
 
@@ -351,6 +359,10 @@ msgstr "Sidebar Game Preview"
 #: src/components/IconCreator/IconCreator.tsx:798
 msgid "保存"
 msgstr "Save"
+
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:201
+msgid "保存流程图"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:504
 msgid "保持闭眼(毫秒)"
@@ -574,7 +586,7 @@ msgid "删除游戏"
 msgstr "Delete game"
 
 #: src/components/Assets/Assets.tsx:476
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:168
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:186
 msgid "刷新"
 msgstr "Refresh"
 
@@ -594,7 +606,7 @@ msgstr "Functional Area"
 msgid "加粗"
 msgstr "Bold"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:111
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:129
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:251
 msgid "动画"
 msgstr "Animation"
@@ -673,6 +685,7 @@ msgstr "Startup image"
 #: src/pages/editor/GraphicalEditor/components/SearchableCascader.tsx:227
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:214
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:224
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:235
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:140
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:155
 #: src/pages/editor/Topbar/tabs/ViewConfig/ViewTab.tsx:81
@@ -740,7 +753,7 @@ msgstr "Open in File Explorer"
 
 #: src/pages/dashboard/GameElement.tsx:97
 #: src/pages/dashboard/TemplateElement.tsx:91
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:174
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:192
 msgid "在新标签页中预览"
 msgstr "Preview in new tab"
 
@@ -748,8 +761,8 @@ msgstr "Preview in new tab"
 msgid "在这里放置编辑组件"
 msgstr "Place editing components here"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:116
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:148
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:134
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:166
 msgid "场景"
 msgstr "Scene"
 
@@ -815,7 +828,7 @@ msgstr "Positioning"
 msgid "实时预览"
 msgstr "Live preview"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:180
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:198
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:98
 msgid "实时预览关闭"
 msgstr "Live preview off"
@@ -824,7 +837,7 @@ msgstr "Live preview off"
 msgid "实时预览将游戏快进至编辑语句，但有限制。先前场景的语句效果，如变量，不会反映在预览中。"
 msgstr "Live preview fast-forwards the game to the edited statement, but with limitations. The effects of statements from previous scenes, such as variables, won't be reflected in the preview."
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:180
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:198
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:98
 msgid "实时预览打开"
 msgstr "Live preview on"
@@ -923,6 +936,10 @@ msgstr "Show avatar"
 msgid "属性"
 msgstr "Property"
 
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:187
+msgid "工具栏"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:59
 msgid "左侧"
 msgstr "Left"
@@ -1004,7 +1021,7 @@ msgstr "Intensity"
 msgid "当前版本"
 msgstr "Current version"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:240
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:257
 msgid "德语"
 msgstr "German"
 
@@ -1039,6 +1056,14 @@ msgstr "Execute to this sentence"
 #: src/components/Assets/Assets.tsx:368
 msgid "扩展名"
 msgstr "Extension name"
+
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:207
+msgid "拖动节点调整位置"
+msgstr ""
+
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:209
+msgid "拖动连线创建连接"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:215
 msgid "拼接先前文本框内的语句"
@@ -1089,6 +1114,10 @@ msgstr "Submit changes"
 #: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
 msgid "提示"
 msgstr "Tip"
+
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:204
+msgid "提示："
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:46
 msgid "提示：先设置立绘/背景，再应用动画，否则找不到目标。"
@@ -1332,7 +1361,7 @@ msgstr "None"
 msgid "无匹配选项"
 msgstr "No matching options"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:238
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:255
 msgid "日语"
 msgstr "Japanese"
 
@@ -1448,7 +1477,7 @@ msgid "根文本长度 (rem)"
 msgstr "Root Font Size (rem)"
 
 #: src/pages/dashboard/DashBoard.tsx:214
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:118
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:136
 msgid "模板"
 msgstr "Template"
 
@@ -1495,7 +1524,7 @@ msgstr "This command will end the game"
 msgid "永不换行"
 msgstr "Never wrap"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:239
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:256
 msgid "法语"
 msgstr "French"
 
@@ -1518,6 +1547,14 @@ msgstr "Comment"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Comment.tsx:22
 msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "Comments are only visible when editing and will not be executed in the game"
+
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:229
+msgid "流程图功能"
+msgstr ""
+
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:112
+msgid "流程图编辑器"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:73
 msgid "淡入淡出"
@@ -1560,6 +1597,10 @@ msgstr "Add new line"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/AddProperty.tsx:67
 msgid "添加自定义属性"
 msgstr "Add Custom Property"
+
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:194
+msgid "添加节点"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:275
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Choose.tsx:71
@@ -1616,7 +1657,7 @@ msgstr "Game description"
 msgid "游戏识别码"
 msgstr "Game ID"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:122
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:140
 msgid "游戏配置"
 msgstr "Game configuration"
 
@@ -1628,6 +1669,10 @@ msgstr "Source code"
 msgid "滤镜"
 msgstr "Filter"
 
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:206
+msgid "点击\"添加节点\"创建新节点"
+msgstr ""
+
 #: src/components/Assets/Upload.tsx:49
 msgid "点击或拖拽文件至此上传"
 msgstr "Click or drag file to this area to upload"
@@ -1635,6 +1680,10 @@ msgstr "Click or drag file to this area to upload"
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:167
 msgid "点击或按退格键以删除旧的分隔符，输入新的分隔符后请按回车键确认。"
 msgstr "Click or press Backspace to delete the old separator. Enter a new separator and press Enter to confirm."
+
+#: src/pages/editor/FlowchartEditor/FlowchartEditor.tsx:208
+msgid "点击节点选择场景文件"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:100
 msgid "点状电影滤镜"
@@ -1649,7 +1698,7 @@ msgstr "Special performance"
 msgid "百分比。 0-100 有效"
 msgstr "Percentage. 0-100 valid"
 
-#: src/pages/editor/MainArea/EditArea.tsx:56
+#: src/pages/editor/MainArea/EditArea.tsx:59
 msgid "目前没有打开任何文件"
 msgstr "No file currently open"
 
@@ -1693,7 +1742,7 @@ msgstr "View"
 msgid "视觉小说编辑，再进化"
 msgstr "Visual novel editing, evolved"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:120
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:138
 msgid "视频"
 msgstr "Video"
 
@@ -1711,6 +1760,7 @@ msgstr "Disable skipping video"
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:215
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:225
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
 msgid "禁用"
 msgstr "Disabled"
 
@@ -1718,7 +1768,7 @@ msgstr "Disabled"
 msgid "立即注视"
 msgstr "Focus instantly"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:115
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:133
 msgid "立绘"
 msgstr "Figure"
 
@@ -1746,7 +1796,7 @@ msgstr "ID of figure illustration"
 msgid "立绘文件"
 msgstr "Figure file"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:235
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:252
 msgid "简体中文"
 msgstr "Simplified Chinese"
 
@@ -1754,7 +1804,7 @@ msgstr "Simplified Chinese"
 msgid "紧急回避"
 msgstr "Emergency Evasion"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:119
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:137
 msgid "纹理"
 msgstr "Texture"
 
@@ -1843,6 +1893,10 @@ msgstr "Edit icon"
 msgid "编辑模板"
 msgstr "Edit template"
 
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:241
+msgid "编辑流程图"
+msgstr ""
+
 #: src/pages/dashboard/GameElement.tsx:88
 msgid "编辑游戏"
 msgstr "Edit game"
@@ -1851,7 +1905,7 @@ msgstr "Edit game"
 msgid "编辑组件"
 msgstr "Edit component"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:236
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:253
 msgid "繁体中文"
 msgstr "Traditional Chinese"
 
@@ -1874,7 +1928,7 @@ msgid "耗时"
 msgstr "Time taken"
 
 #: src/components/IconCreator/IconCreator.tsx:683
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:131
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:64
 msgid "背景"
 msgstr "Background"
@@ -1955,7 +2009,7 @@ msgstr "Custom cascade selector separator"
 msgid "舞台对象控制"
 msgstr "Stage object control"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:237
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:254
 msgid "英语"
 msgstr "English"
 
@@ -2083,7 +2137,7 @@ msgstr "Set custom cascade selector separator (press Enter to confirm after inpu
 msgid "该指令没有被识别，请打开脚本编辑模式以手动编辑"
 msgstr "This command is not recognized, please open script editing mode to edit manually"
 
-#: src/pages/editor/MainArea/EditArea.tsx:42
+#: src/pages/editor/MainArea/EditArea.tsx:45
 msgid "该文件类型不支持预览"
 msgstr "This file type does not support preview"
 
@@ -2094,7 +2148,7 @@ msgstr "This file type does not support preview"
 msgid "语言"
 msgstr "Language"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:121
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:139
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:232
 msgid "语音"
 msgstr "Voice"
@@ -2127,7 +2181,7 @@ msgstr "Call Scene"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "Call scene, return to parent scene after new scene ends"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:147
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:165
 msgid "资源"
 msgstr "Assets"
 
@@ -2215,7 +2269,7 @@ msgstr "Choose animation file"
 msgid "选择图片"
 msgstr "Choose image"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:369
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:386
 msgid "选择图片文件"
 msgstr "Choose image file"
 
@@ -2441,7 +2495,7 @@ msgstr "Right"
 msgid "靠左"
 msgstr "Left"
 
-#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:114
+#: src/pages/editor/EditorSidebar/EditorSidebar.tsx:132
 msgid "音乐"
 msgstr "Music"
 
@@ -2534,7 +2588,7 @@ msgstr "Default 24 hours"
 msgid "默认值50"
 msgstr "Default 50"
 
-#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:229
+#: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:246
 msgid "默认语言"
 msgstr "Default Language"
 
