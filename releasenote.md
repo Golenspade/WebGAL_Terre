@@ -1,5 +1,16 @@
 ## 发布日志
 
+### 新增（Terre 后端 API）
+
+- 场景读取：GET `/api/manageGame/readScene/:gameName/:sceneName`
+  - `sceneName` 可带或不带 `.txt`，返回 `{ sceneName, content }`
+- 场景插入：POST `/api/manageGame/insertScene`
+  - 支持 `start | end | afterLine` 三种插入模式（`afterLine` 为 1 基，下标 0 表示文件开头，超出自动追加到末尾）
+- 场景列表：GET `/api/manageGame/listScenes/:gameName`
+  - 返回当前游戏 `game/scene` 目录下的 `.txt` 场景文件
+
+> 以上接口与既有接口保持兼容：创建场景 `POST /createNewScene`，覆盖编辑 `POST /editScene`。
+
 ### 在此版本中
 
 #### 新功能

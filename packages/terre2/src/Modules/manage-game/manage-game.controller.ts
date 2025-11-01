@@ -30,6 +30,7 @@ import {
   DeleteFileDto,
   EditFileNameDto,
   EditSceneDto,
+  InsertSceneDto,
   EditTextFileDto,
   GameConfigDto,
   GameInfoDto,
@@ -249,6 +250,24 @@ export class ManageGameController {
     return this.webgalFs.createEmptyFile(path);
   }
 
+  @Get('listScenes/:gameName')
+  @ApiOperation({ summary: 'List scenes under a game' })
+  @ApiResponse({ status: 200, description: 'Returned scene file list.' })
+  @ApiParam({ name: 'gameName', type: String, description: 'Name of the game' })
+  async listScenes(@Param('gameName') gameName: string) {
+    const dirPath = this.webgalFs.getPathFromRoot(
+      `/public/games/${decodeURI(gameName)}/game/scene`,
+    );
+    const exists = await this.webgalFs.existsDir(dirPath);
+    if (!exists) {
+      throw new BadRequestException('Scene directory not found');
+    }
+    const dirInfo = await this.webgalFs.getDirInfo(dirPath);
+    return dirInfo
+      .filter((e) => !e.isDir && e.extName === '.txt')
+      .map((e) => ({ name: e.name, path: e.path }));
+  }
+
   @Post('editScene')
   @ApiOperation({ summary: 'Edit Scene' })
   @ApiResponse({ status: 200, description: 'Scene edited successfully.' })
@@ -259,6 +278,74 @@ export class ManageGameController {
     );
     const sceneData = JSON.parse(editSceneData.sceneData) as { value: string };
     return this.webgalFs.updateTextFile(path, sceneData.value);
+  }
+
+  @Get('readScene/:gameName/:sceneName')
+  @ApiOperation({ summary: 'Read Scene Content' })
+  @ApiResponse({ status: 200, description: 'Returned scene content.' })
+  @ApiResponse({ status: 400, description: 'Scene file not found.' })
+  @ApiParam({ name: 'gameName', type: String, description: 'Name of the game' })
+  @ApiParam({ name: 'sceneName', type: String, description: 'Name of the scene (with or without .txt)' })
+  async readScene(
+    @Param('gameName') gameName: string,
+    @Param('sceneName') sceneName: string,
+  ) {
+    const normalizeName = (name: string) =>
+      name.endsWith('.txt') ? name : `${name}.txt`;
+    const resolvedName = normalizeName(decodeURI(sceneName));
+    const scenePath = this.webgalFs.getPathFromRoot(
+      `/public/games/${decodeURI(gameName)}/game/scene/${resolvedName}`,
+    );
+
+    const exists = await this.webgalFs.exists(scenePath);
+    if (!exists) {
+      throw new BadRequestException('Scene file not found');
+    }
+    const content = await this.webgalFs.readTextFile(scenePath);
+    return { sceneName: resolvedName, content };
+  }
+
+  @Post('insertScene')
+  @ApiOperation({ summary: 'Insert content into a scene file' })
+  @ApiResponse({ status: 200, description: 'Scene updated with inserted content.' })
+  @ApiResponse({ status: 400, description: 'Failed to insert into scene.' })
+  @ApiBody({ type: InsertSceneDto, description: 'Scene insert data' })
+  async insertScene(@Body() insertDto: InsertSceneDto) {
+    const normalizeName = (name: string) =>
+      name.endsWith('.txt') ? name : `${name}.txt`;
+
+    const scenePath = this.webgalFs.getPathFromRoot(
+      `/public/games/${insertDto.gameName}/game/scene/${normalizeName(insertDto.sceneName)}`,
+    );
+
+    const content = await this.webgalFs.readTextFile(scenePath);
+    if (typeof content !== 'string' || content === 'file not exist') {
+      throw new BadRequestException('Scene file not found');
+    }
+
+    const lines = content.split(/\r?\n/);
+    let newLines: string[] = [];
+
+    switch (insertDto.mode) {
+      case 'start':
+        newLines = [insertDto.insertText, ...lines];
+        break;
+      case 'end':
+        newLines = [...lines, insertDto.insertText];
+        break;
+      case 'afterLine': {
+        const ln = Math.max(0, Math.min((insertDto.line ?? 0), lines.length));
+        // insert after line number ln (1-based). If ln=0, insert at start; if ln>=length, append
+        const idx = Math.max(0, Math.min(ln, lines.length));
+        newLines = [...lines.slice(0, idx), insertDto.insertText, ...lines.slice(idx)];
+        break;
+      }
+      default:
+        throw new BadRequestException('Invalid insert mode');
+    }
+
+    const joined = newLines.join('\n');
+    return this.webgalFs.updateTextFile(scenePath, joined);
   }
 
   @Post('editTextFile')

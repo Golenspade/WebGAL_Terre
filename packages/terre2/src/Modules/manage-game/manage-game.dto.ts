@@ -54,6 +54,23 @@ export class EditSceneDto {
   sceneData: string;
 }
 
+export class InsertSceneDto {
+  @ApiProperty({ description: 'The name of the game' })
+  gameName: string;
+
+  @ApiProperty({ description: 'The name of the scene (with or without .txt)' })
+  sceneName: string;
+
+  @ApiProperty({ description: 'Insert mode: start | end | afterLine', enum: ['start', 'end', 'afterLine'] })
+  mode: 'start' | 'end' | 'afterLine';
+
+  @ApiProperty({ description: 'Line number when mode=afterLine (1-based)', required: false })
+  line?: number;
+
+  @ApiProperty({ description: 'Text content to insert' })
+  insertText: string;
+}
+
 export class EditTextFileDto {
   @ApiProperty({ description: 'The path of textfile' })
   path: string;
