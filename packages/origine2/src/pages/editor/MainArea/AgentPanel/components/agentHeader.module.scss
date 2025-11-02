@@ -1,0 +1,84 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px;
+  background: var(--colorNeutralBackground2);
+  border-radius: 8px;
+}
+
+.statusRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.statusIndicator {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusOnline {
+  color: var(--colorPaletteGreenForeground1);
+}
+
+.statusOffline {
+  color: var(--colorNeutralForeground3);
+}
+
+.statusText {
+  font-weight: 500;
+}
+
+.projectRoot {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--colorNeutralForeground2);
+}
+
+.projectRootPath {
+  font-family: monospace;
+  background: var(--colorNeutralBackground1);
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.connectForm {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+}
+
+.projectRootInput {
+  flex: 1;
+  min-width: 300px;
+}
+
+.error {
+  padding: 8px 12px;
+  background: var(--colorPaletteRedBackground2);
+  color: var(--colorPaletteRedForeground1);
+  border-radius: 4px;
+  font-size: 13px;
+}
+
+.toolsInfo {
+  font-size: 12px;
+  color: var(--colorNeutralForeground2);
+}
+
+.toolsCount {
+  font-weight: 500;
+}
+

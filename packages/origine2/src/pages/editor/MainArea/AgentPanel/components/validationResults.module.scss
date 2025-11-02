@@ -1,0 +1,78 @@
+.validationResults {
+  h3 {
+    margin: 0 0 12px 0;
+    font-size: 16px;
+    font-weight: 600;
+  }
+}
+
+.success {
+  color: var(--colorPaletteGreenForeground1);
+  font-weight: 500;
+}
+
+.diagnostics {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.diagnostic {
+  padding: 12px;
+  border-radius: 6px;
+  border-left: 4px solid;
+}
+
+.kind-syntax {
+  background: var(--colorPaletteRedBackground2);
+  border-left-color: var(--colorPaletteRedBorder1);
+}
+
+.kind-resource {
+  background: var(--colorPaletteYellowBackground2);
+  border-left-color: var(--colorPaletteYellowBorder1);
+}
+
+.kind-warning {
+  background: var(--colorPaletteOrangeBackground2);
+  border-left-color: var(--colorPaletteOrangeBorder1);
+}
+
+.diagnosticHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 6px;
+}
+
+.line {
+  font-family: monospace;
+  font-weight: 600;
+  font-size: 12px;
+}
+
+.kind {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: var(--colorNeutralBackground1);
+}
+
+.message {
+  font-size: 13px;
+  margin-bottom: 6px;
+}
+
+.hint {
+  font-size: 12px;
+  color: var(--colorNeutralForeground2);
+  font-style: italic;
+
+  strong {
+    font-weight: 600;
+    font-style: normal;
+  }
+}
+

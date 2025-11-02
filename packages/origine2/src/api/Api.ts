@@ -117,6 +117,19 @@ export interface EditSceneDto {
   sceneData: string;
 }
 
+export interface InsertSceneDto {
+  /** The name of the game */
+  gameName: string;
+  /** The name of the scene (with or without .txt) */
+  sceneName: string;
+  /** Insert mode: start | end | afterLine */
+  mode: "start" | "end" | "afterLine";
+  /** Line number when mode=afterLine (1-based) */
+  line?: number;
+  /** Text content to insert */
+  insertText: string;
+}
+
 export interface GameConfigDto {
   /** The name of the game */
   gameName: string;
@@ -185,6 +198,46 @@ export interface GetStyleByClassNameDto {
   className: string;
   /** The path of stylesheet file to be fetched */
   filePath: string;
+}
+
+export interface ToolDto {
+  /** Tool name */
+  name: string;
+  /** Tool description */
+  description?: string;
+  /** Tool input schema */
+  inputSchema?: object;
+}
+
+export interface AgentStatusDto {
+  /** Whether MCP is running */
+  running: boolean;
+  /** Current project root */
+  projectRoot?: string;
+  /** Available tools */
+  tools: ToolDto[];
+}
+
+export interface SetProjectRootDto {
+  /** Project root directory */
+  projectRoot: string;
+  /**
+   * Enable execution capability
+   * @default false
+   */
+  enableExec?: boolean;
+  /**
+   * Enable browser capability
+   * @default false
+   */
+  enableBrowser?: boolean;
+}
+
+export interface CallToolDto {
+  /** Tool name to call */
+  name: string;
+  /** Tool arguments */
+  args?: object;
 }
 
 import type {
@@ -779,6 +832,24 @@ export class Api<
      * No description
      *
      * @tags Manage Game
+     * @name ManageGameControllerListScenes
+     * @summary List scenes under a game
+     * @request GET:/api/manageGame/listScenes/{gameName}
+     */
+    manageGameControllerListScenes: (
+      gameName: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/api/manageGame/listScenes/${gameName}`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
      * @name ManageGameControllerEditScene
      * @summary Edit Scene
      * @request POST:/api/manageGame/editScene
@@ -789,6 +860,45 @@ export class Api<
     ) =>
       this.request<void, void>({
         path: `/api/manageGame/editScene`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
+     * @name ManageGameControllerReadScene
+     * @summary Read Scene Content
+     * @request GET:/api/manageGame/readScene/{gameName}/{sceneName}
+     */
+    manageGameControllerReadScene: (
+      gameName: string,
+      sceneName: string,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/manageGame/readScene/${gameName}/${sceneName}`,
+        method: "GET",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Manage Game
+     * @name ManageGameControllerInsertScene
+     * @summary Insert content into a scene file
+     * @request POST:/api/manageGame/insertScene
+     */
+    manageGameControllerInsertScene: (
+      data: InsertSceneDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, void>({
+        path: `/api/manageGame/insertScene`,
         method: "POST",
         body: data,
         type: ContentType.Json,
@@ -1074,6 +1184,90 @@ export class Api<
         body: data,
         type: ContentType.Json,
         format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Agent
+     * @name AgentControllerGetStatus
+     * @summary Get Agent MCP status
+     * @request GET:/api/agent/status
+     */
+    agentControllerGetStatus: (params: RequestParams = {}) =>
+      this.request<AgentStatusDto, any>({
+        path: `/api/agent/status`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Agent
+     * @name AgentControllerStart
+     * @summary Start MCP with project root
+     * @request POST:/api/agent/start
+     */
+    agentControllerStart: (
+      data: SetProjectRootDto,
+      params: RequestParams = {},
+    ) =>
+      this.request<void, any>({
+        path: `/api/agent/start`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Agent
+     * @name AgentControllerStop
+     * @summary Stop MCP
+     * @request POST:/api/agent/stop
+     */
+    agentControllerStop: (params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/agent/stop`,
+        method: "POST",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Agent
+     * @name AgentControllerListTools
+     * @summary List available tools
+     * @request GET:/api/agent/tools
+     */
+    agentControllerListTools: (params: RequestParams = {}) =>
+      this.request<ToolDto[], any>({
+        path: `/api/agent/tools`,
+        method: "GET",
+        format: "json",
+        ...params,
+      }),
+
+    /**
+     * No description
+     *
+     * @tags Agent
+     * @name AgentControllerCallTool
+     * @summary Call a tool
+     * @request POST:/api/agent/call
+     */
+    agentControllerCallTool: (data: CallToolDto, params: RequestParams = {}) =>
+      this.request<void, any>({
+        path: `/api/agent/call`,
+        method: "POST",
+        body: data,
+        type: ContentType.Json,
         ...params,
       }),
   };

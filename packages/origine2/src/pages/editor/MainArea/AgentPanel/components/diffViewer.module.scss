@@ -1,0 +1,81 @@
+.diffViewer {
+  font-family: monospace;
+  font-size: 12px;
+  background: var(--colorNeutralBackground1);
+  border: 1px solid var(--colorNeutralStroke1);
+  border-radius: 4px;
+  overflow: auto;
+  max-height: 500px;
+}
+
+.noDiff {
+  padding: 16px;
+  text-align: center;
+  color: var(--colorNeutralForeground3);
+}
+
+.hunk {
+  margin-bottom: 16px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.hunkHeader {
+  background: var(--colorNeutralBackground3);
+  padding: 4px 12px;
+  border-bottom: 1px solid var(--colorNeutralStroke1);
+}
+
+.hunkInfo {
+  color: var(--colorNeutralForeground2);
+  font-weight: 500;
+}
+
+.hunkContent {
+  // Container for diff lines
+}
+
+.lineRemoved,
+.lineAdded {
+  display: flex;
+  padding: 2px 0;
+
+  &:hover {
+    background: var(--colorNeutralBackground2);
+  }
+}
+
+.lineRemoved {
+  background: rgba(255, 0, 0, 0.1);
+
+  .lineContent {
+    color: var(--colorPaletteRedForeground1);
+  }
+}
+
+.lineAdded {
+  background: rgba(0, 255, 0, 0.1);
+
+  .lineContent {
+    color: var(--colorPaletteGreenForeground1);
+  }
+}
+
+.lineNumber {
+  display: inline-block;
+  width: 60px;
+  padding: 0 12px;
+  text-align: right;
+  color: var(--colorNeutralForeground3);
+  user-select: none;
+}
+
+.lineContent {
+  flex: 1;
+  padding-right: 12px;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
