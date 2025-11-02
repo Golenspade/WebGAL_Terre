@@ -94,11 +94,34 @@ export class AgentController {
       const result = await this.agentMcp.callTool(dto.name, dto.args);
       return result;
     } catch (error) {
+      // 透传 MCP 工具错误的详细信息
+      const statusCode = this.getHttpStatusFromErrorCode(error.code);
       throw new HttpException(
-        `Tool call failed: ${error.message}`,
-        HttpStatus.INTERNAL_SERVER_ERROR,
+        {
+          message: error.message,
+          code: error.code,
+          hint: error.hint,
+          details: error.details,
+        },
+        statusCode,
       );
     }
+  }
+
+  private getHttpStatusFromErrorCode(code?: string): number {
+    if (!code) return HttpStatus.INTERNAL_SERVER_ERROR;
+
+    // 映射 CONTRACTS.md 错误码到 HTTP 状态码
+    const errorCodeMap: Record<string, number> = {
+      E_NOT_FOUND: HttpStatus.NOT_FOUND,
+      E_BAD_ARGS: HttpStatus.BAD_REQUEST,
+      E_CONFLICT: HttpStatus.CONFLICT,
+      E_TIMEOUT: HttpStatus.REQUEST_TIMEOUT,
+      E_FORBIDDEN: HttpStatus.FORBIDDEN,
+      E_INTERNAL: HttpStatus.INTERNAL_SERVER_ERROR,
+    };
+
+    return errorCodeMap[code] || HttpStatus.INTERNAL_SERVER_ERROR;
   }
 }
 

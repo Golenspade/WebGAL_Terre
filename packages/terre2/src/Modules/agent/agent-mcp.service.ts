@@ -38,8 +38,9 @@ export class AgentMcpService implements OnModuleDestroy {
     reject: (error: any) => void;
     timeout: NodeJS.Timeout;
   }>();
-  private buffer = '';
+  private buffer = Buffer.alloc(0);
   private tools: McpTool[] = [];
+  private initialized = false;
 
   async start(projectRoot: string, options?: { enableExec?: boolean; enableBrowser?: boolean }): Promise<void> {
     if (this.mcpProcess) {
@@ -48,13 +49,13 @@ export class AgentMcpService implements OnModuleDestroy {
     }
 
     this.projectRoot = projectRoot;
-    const mcpBinPath = this.resolveMcpBinPath();
+    const { command, args: binArgs } = this.resolveMcpBinPath();
 
-    if (!mcpBinPath) {
+    if (!command) {
       throw new Error('MCP binary not found');
     }
 
-    const args = ['--project', projectRoot];
+    const args = [...binArgs, '--project', projectRoot];
     if (options?.enableExec) {
       args.push('--enable-exec');
     }
@@ -62,15 +63,16 @@ export class AgentMcpService implements OnModuleDestroy {
       args.push('--enable-browser');
     }
 
-    this.logger.log(`Starting MCP: ${mcpBinPath} ${args.join(' ')}`);
+    this.logger.log(`Starting MCP: ${command} ${args.join(' ')}`);
 
-    this.mcpProcess = spawn(mcpBinPath, args, {
+    this.mcpProcess = spawn(command, args, {
       stdio: ['pipe', 'pipe', 'pipe'],
       env: { ...process.env, NODE_ENV: 'production' },
+      cwd: projectRoot,
     });
 
-    this.mcpProcess.stdout?.on('data', (chunk) => {
-      this.buffer += chunk.toString();
+    this.mcpProcess.stdout?.on('data', (chunk: Buffer) => {
+      this.buffer = Buffer.concat([this.buffer, chunk]);
       this.processBuffer();
     });
 
@@ -89,7 +91,7 @@ export class AgentMcpService implements OnModuleDestroy {
     });
 
     // Wait for initialization and fetch tools
-    await this.waitForReady();
+    await this.initialize();
     await this.fetchTools();
   }
 
@@ -124,25 +126,35 @@ export class AgentMcpService implements OnModuleDestroy {
       throw new Error('MCP process not running');
     }
 
-    const id = ++this.requestId;
-    const request: JsonRpcRequest = {
-      jsonrpc: '2.0',
-      id,
-      method: 'tools/call',
-      params: { name, arguments: args || {} },
-    };
-
-    return new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => {
-        this.pendingRequests.delete(id);
-        reject(new Error(`Tool call timeout: ${name}`));
-      }, 60000); // 60s timeout
-
-      this.pendingRequests.set(id, { resolve, reject, timeout });
-
-      const message = JSON.stringify(request) + '\n';
-      this.mcpProcess!.stdin?.write(message);
+    const result = await this.sendRequest('tools/call', {
+      name,
+      arguments: args || {},
     });
+
+    // 解包 MCP 工具响应：result.content[0].text 包含实际结果
+    if (result.content && Array.isArray(result.content) && result.content[0]?.text) {
+      try {
+        const parsed = JSON.parse(result.content[0].text);
+
+        // 检查是否有错误
+        if (parsed.error) {
+          const error: any = new Error(parsed.error.message || 'Tool call failed');
+          error.code = parsed.error.code;
+          error.hint = parsed.error.hint;
+          error.details = parsed.error.details;
+          throw error;
+        }
+
+        return parsed as T;
+      } catch (parseError) {
+        // 如果解析失败，返回原始文本
+        this.logger.warn(`Failed to parse tool result: ${parseError.message}`);
+        return result.content[0].text as T;
+      }
+    }
+
+    // 如果没有 content，返回原始结果
+    return result as T;
   }
 
   async listTools(): Promise<McpTool[]> {
@@ -162,17 +174,42 @@ export class AgentMcpService implements OnModuleDestroy {
   }
 
   private processBuffer(): void {
-    const lines = this.buffer.split('\n');
-    this.buffer = lines.pop() || '';
+    while (true) {
+      // 查找 Content-Length 头
+      const headerEnd = this.buffer.indexOf('\r\n\r\n');
+      if (headerEnd === -1) {
+        // 没有完整的头，等待更多数据
+        break;
+      }
 
-    for (const line of lines) {
-      if (!line.trim()) continue;
+      // 解析头部
+      const headerStr = this.buffer.slice(0, headerEnd).toString('utf8');
+      const match = /Content-Length: (\d+)/i.exec(headerStr);
+      if (!match) {
+        this.logger.error('Invalid LSP frame: missing Content-Length');
+        this.buffer = this.buffer.slice(headerEnd + 4);
+        continue;
+      }
+
+      const contentLength = parseInt(match[1], 10);
+      const messageStart = headerEnd + 4;
+      const messageEnd = messageStart + contentLength;
+
+      // 检查是否有完整的消息体
+      if (this.buffer.length < messageEnd) {
+        // 等待更多数据
+        break;
+      }
+
+      // 提取并解析消息
+      const messageStr = this.buffer.slice(messageStart, messageEnd).toString('utf8');
+      this.buffer = this.buffer.slice(messageEnd);
 
       try {
-        const message = JSON.parse(line) as JsonRpcResponse;
+        const message = JSON.parse(messageStr) as JsonRpcResponse;
         this.handleResponse(message);
       } catch (error) {
-        this.logger.error(`Failed to parse JSON-RPC message: ${line}`);
+        this.logger.error(`Failed to parse JSON-RPC message: ${messageStr}`);
       }
     }
   }
@@ -197,8 +234,9 @@ export class AgentMcpService implements OnModuleDestroy {
   private cleanup(): void {
     this.mcpProcess = null;
     this.projectRoot = null;
-    this.buffer = '';
+    this.buffer = Buffer.alloc(0);
     this.tools = [];
+    this.initialized = false;
 
     // Reject all pending requests
     for (const [id, pending] of this.pendingRequests.entries()) {
@@ -208,32 +246,59 @@ export class AgentMcpService implements OnModuleDestroy {
     this.pendingRequests.clear();
   }
 
-  private async waitForReady(): Promise<void> {
-    // Simple delay to allow MCP to initialize
-    await new Promise(resolve => setTimeout(resolve, 1000));
+  private async initialize(): Promise<void> {
+    if (this.initialized) {
+      return;
+    }
+
+    this.logger.log('Initializing MCP connection');
+
+    const result = await this.sendRequest('initialize', {
+      protocolVersion: '2024-11-05',
+      capabilities: {},
+      clientInfo: {
+        name: 'webgal-terre',
+        version: '0.1.0',
+      },
+    });
+
+    this.logger.log('MCP initialized successfully');
+    this.initialized = true;
+  }
+
+  private async sendRequest(method: string, params?: any): Promise<any> {
+    if (!this.mcpProcess) {
+      throw new Error('MCP process not running');
+    }
+
+    const id = ++this.requestId;
+    const request: JsonRpcRequest = {
+      jsonrpc: '2.0',
+      id,
+      method,
+      params,
+    };
+
+    return new Promise((resolve, reject) => {
+      const timeout = setTimeout(() => {
+        this.pendingRequests.delete(id);
+        reject(new Error(`Request timeout: ${method}`));
+      }, 60000); // 60s timeout
+
+      this.pendingRequests.set(id, { resolve, reject, timeout });
+
+      // 使用 LSP 帧格式发送
+      const json = JSON.stringify(request);
+      const contentLength = Buffer.byteLength(json, 'utf8');
+      const frame = `Content-Length: ${contentLength}\r\n\r\n${json}`;
+
+      this.mcpProcess!.stdin?.write(frame);
+    });
   }
 
   private async fetchTools(): Promise<void> {
     try {
-      const id = ++this.requestId;
-      const request: JsonRpcRequest = {
-        jsonrpc: '2.0',
-        id,
-        method: 'tools/list',
-      };
-
-      const result = await new Promise<any>((resolve, reject) => {
-        const timeout = setTimeout(() => {
-          this.pendingRequests.delete(id);
-          reject(new Error('List tools timeout'));
-        }, 10000);
-
-        this.pendingRequests.set(id, { resolve, reject, timeout });
-
-        const message = JSON.stringify(request) + '\n';
-        this.mcpProcess!.stdin?.write(message);
-      });
-
+      const result = await this.sendRequest('tools/list');
       this.tools = result.tools || [];
       this.logger.log(`Fetched ${this.tools.length} tools from MCP`);
     } catch (error) {
@@ -242,29 +307,26 @@ export class AgentMcpService implements OnModuleDestroy {
     }
   }
 
-  private resolveMcpBinPath(): string | null {
+  private resolveMcpBinPath(): { command: string; args: string[] } | { command: null; args: [] } {
     // Try multiple possible locations
-    const possiblePaths = [
-      // Development: TypeScript source
-      path.resolve(__dirname, '../../../../../webgal_agent/packages/mcp-webgal/src/bin.ts'),
-      // Production: Compiled JS
-      path.resolve(__dirname, '../../../../../webgal_agent/packages/mcp-webgal/dist/bin.js'),
-      // Installed globally
-      'mcp-webgal',
-    ];
+    const tsPath = path.resolve(__dirname, '../../../../../webgal_agent/packages/mcp-webgal/src/bin.ts');
+    const distPath = path.resolve(__dirname, '../../../../../webgal_agent/packages/mcp-webgal/dist/bin.js');
 
-    for (const binPath of possiblePaths) {
-      if (fs.existsSync(binPath)) {
-        // If .ts file, use tsx to run it
-        if (binPath.endsWith('.ts')) {
-          return `npx tsx ${binPath}`;
-        }
-        return binPath;
-      }
+    // 优先使用已构建的 dist/bin.js
+    if (fs.existsSync(distPath)) {
+      this.logger.log(`Using compiled MCP binary: ${distPath}`);
+      return { command: 'node', args: [distPath] };
     }
 
-    this.logger.error('MCP binary not found in any of the expected locations');
-    return null;
+    // Fallback 到 TypeScript 源码（开发环境）
+    if (fs.existsSync(tsPath)) {
+      this.logger.log(`Using TypeScript MCP source: ${tsPath}`);
+      return { command: 'npx', args: ['tsx', tsPath] };
+    }
+
+    // 尝试全局安装的 mcp-webgal
+    this.logger.log('Trying globally installed mcp-webgal');
+    return { command: 'mcp-webgal', args: [] };
   }
 }
 
