@@ -11,6 +11,7 @@ export default function ValidationResults({ result }: ValidationResultsProps) {
     const labels: Record<string, string> = {
       syntax: t`语法错误`,
       resource: t`资源错误`,
+      style: t`风格/样式`,
       warning: t`警告`,
     };
     return labels[kind] || kind;

@@ -22,7 +22,7 @@ export default function AgentResults() {
           {result.type === 'read' && (
             <div className={styles.readResult}>
               <h3>{t`文件已读取`}</h3>
-              <p>{t`大小`}: {result.data.size} bytes</p>
+              <p>{t`大小`}: {result.data.bytes} bytes</p>
               <p>{t`编码`}: {result.data.encoding}</p>
             </div>
           )}

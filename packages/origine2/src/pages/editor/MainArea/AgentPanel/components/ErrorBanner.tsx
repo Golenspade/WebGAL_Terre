@@ -18,6 +18,7 @@ export default function ErrorBanner({ error }: ErrorBannerProps) {
       E_BAD_ARGS: t`参数错误`,
       E_CONFLICT: t`冲突`,
       E_TIMEOUT: t`超时`,
+      E_DENY_PATH: t`路径禁止`,
       E_FORBIDDEN: t`禁止访问`,
       E_POLICY_VIOLATION: t`策略违规`,
       E_TOO_LARGE: t`文件过大`,

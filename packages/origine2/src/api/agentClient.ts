@@ -76,7 +76,8 @@ export interface ListProjectResourcesResponse {
 export interface ReadFileResponse {
   content: string;
   encoding: string;
-  size: number;
+  bytes: number;
+  path?: string;
 }
 
 /**

@@ -26,8 +26,10 @@ export default function AgentActions({ projectRoot, currentScene }: AgentActions
 
   const { setResult, setError, clearResults } = useAgentResultsStore();
 
-  // 默认目标文件路径
-  const defaultPath = currentScene ? `game/scene/${currentScene}.txt` : '';
+  // 默认目标文件路径（避免重复扩展名）
+  const name = currentScene || '';
+  const normalized = name.endsWith('.txt') ? name : `${name}.txt`;
+  const defaultPath = name ? `game/scene/${normalized}` : '';
   const effectivePath = targetPath || defaultPath;
 
   const handleReadFile = async () => {
