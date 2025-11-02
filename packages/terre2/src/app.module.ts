@@ -8,6 +8,7 @@ import { ManageTemplateModule } from './Modules/manage-template/manage-template.
 // import { LspModule } from './Modules/lsp/lsp.module';
 import { TemplatePreviewModule } from './Modules/template-preview/template-preview.module';
 import { AssetsModule } from './Modules/assets/assets.module';
+import { AgentModule } from './Modules/agent/agent.module';
 import { WebGalWebSocketGateway } from './Modules/websocket/websocketGateway';
 import { LspGateway } from './Modules/lsp/gateway';
 
@@ -20,6 +21,8 @@ import { LspGateway } from './Modules/lsp/gateway';
     ManageGameModule,
     ManageTemplateModule,
     TemplatePreviewModule,
+    // Agent MCP 服务
+    AgentModule,
     // 静态文件服务：游戏与编辑器静态资源文件
     ServeStaticModule.forRoot({
       rootPath: join(process.cwd(), 'public'),
