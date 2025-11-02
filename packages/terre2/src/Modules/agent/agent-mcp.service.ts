@@ -253,17 +253,22 @@ export class AgentMcpService implements OnModuleDestroy {
 
     this.logger.log('Initializing MCP connection');
 
-    const result = await this.sendRequest('initialize', {
-      protocolVersion: '2024-11-05',
-      capabilities: {},
-      clientInfo: {
-        name: 'webgal-terre',
-        version: '0.1.0',
-      },
-    });
+    try {
+      const result = await this.sendRequest('initialize', {
+        protocolVersion: '2024-11-05',
+        capabilities: {},
+        clientInfo: {
+          name: 'webgal-terre',
+          version: '0.1.0',
+        },
+      });
 
-    this.logger.log('MCP initialized successfully');
-    this.initialized = true;
+      this.logger.log(`MCP initialized successfully: ${JSON.stringify(result)}`);
+      this.initialized = true;
+    } catch (error) {
+      this.logger.error(`MCP initialization failed: ${error.message}`);
+      throw new Error(`Failed to initialize MCP: ${error.message}`);
+    }
   }
 
   private async sendRequest(method: string, params?: any): Promise<any> {
@@ -301,6 +306,15 @@ export class AgentMcpService implements OnModuleDestroy {
       const result = await this.sendRequest('tools/list');
       this.tools = result.tools || [];
       this.logger.log(`Fetched ${this.tools.length} tools from MCP`);
+
+      // 如果工具列表为空，重试一次
+      if (this.tools.length === 0) {
+        this.logger.warn('Tool list is empty, retrying...');
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const retryResult = await this.sendRequest('tools/list');
+        this.tools = retryResult.tools || [];
+        this.logger.log(`Retry: Fetched ${this.tools.length} tools from MCP`);
+      }
     } catch (error) {
       this.logger.error(`Failed to fetch tools: ${error.message}`);
       this.tools = [];
