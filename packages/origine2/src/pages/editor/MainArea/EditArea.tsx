@@ -59,6 +59,7 @@ export default function EditArea() {
       <div className={styles.editArea_main}>
         <AgentPanel />
       </div>
+      {isShowDebugger && <EditorDebugger/>}
       <EditorToolbar/>
     </>;
   }

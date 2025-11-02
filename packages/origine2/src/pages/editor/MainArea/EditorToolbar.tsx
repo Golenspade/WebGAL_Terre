@@ -1,4 +1,4 @@
-import {DataSheet, FileCodeOne, ListView, Terminal} from '@icon-park/react';
+import {DataSheet, FileCodeOne, ListView, Terminal, Robot} from '@icon-park/react';
 import s from './editorToolbar.module.scss';
 import {useEffect, useState} from "react";
 import {eventBus} from "@/utils/eventBus";
@@ -76,8 +76,8 @@ export default function EditorToolbar() {
       {t`图形编辑器`}
     </div>
     <div onClick={handleSetAgentMode} className={s.toolbar_button + ' ' + (isAgentMode ? s.toolbar_button_active : '')}>
-      <Terminal theme="outline" size="20" fill={isAgentMode ? '#005CAF' : "#333"} strokeWidth={3}/>
-      Agent
+      <Robot theme="outline" size="20" fill={isAgentMode ? '#005CAF' : "#333"} strokeWidth={3}/>
+      {t`智能助手`}
     </div>
   </div>;
 }
