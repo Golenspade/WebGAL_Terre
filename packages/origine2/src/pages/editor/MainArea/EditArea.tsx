@@ -4,6 +4,7 @@ import ResourceDisplay, {ResourceType} from "../ResourceDisplay/ResourceDisplay"
 import GraphicalEditor from "../GraphicalEditor/GraphicalEditor";
 import EditorToolbar from "@/pages/editor/MainArea/EditorToolbar";
 import EditorDebugger from "@/pages/editor/MainArea/EditorDebugger/EditorDebugger";
+import AgentPanel from "@/pages/editor/MainArea/AgentPanel/AgentPanel";
 import { useGameEditorContext } from "@/store/useGameEditorStore";
 import { ITag } from "@/types/gameEditor";
 import { t } from "@lingui/macro";
@@ -16,6 +17,7 @@ export default function EditArea() {
   const tags = useGameEditorContext((state) => state.tags);
   const isCodeMode = useGameEditorContext((state) => state.isCodeMode);
   const isShowDebugger = useGameEditorContext((state) => state.isShowDebugger);
+  const isAgentMode = useGameEditorContext((state) => state.isAgentMode);
 
   const basePath = useMemo(() => ['games', gameDir, 'game'], [gameDir]);
 
@@ -51,6 +53,17 @@ export default function EditArea() {
 
   const tagPage = tag ? getTagPage(tag) : "";
 
+  // Agent 模式：显示 Agent 面板
+  if (isAgentMode) {
+    return <>
+      <div className={styles.editArea_main}>
+        <AgentPanel />
+      </div>
+      <EditorToolbar/>
+    </>;
+  }
+
+  // 正常编辑模式
   return <>
     <div className={styles.editArea_main}>
       {tag?.path === "" && <div className={styles.none_text}>{t`目前没有打开任何文件`}</div>}

@@ -8,8 +8,10 @@ import { t } from '@lingui/macro';
 export default function EditorToolbar() {
   const isCodeMode = useGameEditorContext((state) => state.isCodeMode);
   const isShowDebugger = useGameEditorContext((state)=> state.isShowDebugger);
+  const isAgentMode = useGameEditorContext((state) => state.isAgentMode);
   const updateIsCodeMode = useGameEditorContext((state)=> state.updateIsCodeMode);
   const updateIsShowDebugger = useGameEditorContext((state) => state.updateIsShowDebugger);
+  const updateIsAgentMode = useGameEditorContext((state) => state.updateIsAgentMode);
 
   const [textNum,setTextNum] = useState(0);
   const [lineNum,setLineNum] = useState(0);
@@ -23,8 +25,17 @@ export default function EditorToolbar() {
   const textNumString = formatNumberWithCommas(textNum);
   const lineNumString = formatNumberWithCommas(lineNum);
 
-  const handleSetCodeMode = () => updateIsCodeMode(true);
-  const handleSetGraphMode = () => updateIsCodeMode(false);
+  const handleSetCodeMode = () => {
+    updateIsCodeMode(true);
+    updateIsAgentMode(false);
+  };
+  const handleSetGraphMode = () => {
+    updateIsCodeMode(false);
+    updateIsAgentMode(false);
+  };
+  const handleSetAgentMode = () => {
+    updateIsAgentMode(true);
+  };
 
   useEffect(() => {
     const handleUpdagteScene = (scene:string)=>{
@@ -55,14 +66,18 @@ export default function EditorToolbar() {
       <DataSheet theme="outline" size="20" fill="#333" strokeWidth={3}/>
       {lineNumString} {t`行脚本`}, {textNumString} {t`个字`}
     </div>
-    <div onClick={handleSetCodeMode} className={s.toolbar_button + ' ' + (isCodeMode ? s.toolbar_button_active : '')}
+    <div onClick={handleSetCodeMode} className={s.toolbar_button + ' ' + (isCodeMode && !isAgentMode ? s.toolbar_button_active : '')}
       style={{marginLeft: 'auto'}}>
-      <FileCodeOne theme="outline" size="20" fill={isCodeMode ? '#005CAF' : "#333"} strokeWidth={3}/>
+      <FileCodeOne theme="outline" size="20" fill={isCodeMode && !isAgentMode ? '#005CAF' : "#333"} strokeWidth={3}/>
       {t`脚本编辑器`}
     </div>
-    <div onClick={handleSetGraphMode} className={s.toolbar_button + ' ' + (!isCodeMode ? s.toolbar_button_active : '')}>
-      <ListView theme="outline" size="20" fill={isCodeMode ? "#333" : '#005CAF'} strokeWidth={3}/>
+    <div onClick={handleSetGraphMode} className={s.toolbar_button + ' ' + (!isCodeMode && !isAgentMode ? s.toolbar_button_active : '')}>
+      <ListView theme="outline" size="20" fill={!isCodeMode && !isAgentMode ? '#005CAF' : "#333"} strokeWidth={3}/>
       {t`图形编辑器`}
+    </div>
+    <div onClick={handleSetAgentMode} className={s.toolbar_button + ' ' + (isAgentMode ? s.toolbar_button_active : '')}>
+      <Terminal theme="outline" size="20" fill={isAgentMode ? '#005CAF' : "#333"} strokeWidth={3}/>
+      Agent
     </div>
   </div>;
 }

@@ -1,0 +1,76 @@
+.agentPanel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: var(--colorNeutralBackground1);
+  padding: 16px;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--colorNeutralStroke1);
+
+  h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+  }
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.statusOnline {
+  color: var(--colorPaletteGreenForeground1);
+  font-weight: 500;
+
+  &::before {
+    content: '●';
+    margin-right: 4px;
+  }
+}
+
+.statusOffline {
+  color: var(--colorNeutralForeground3);
+  font-weight: 500;
+
+  &::before {
+    content: '●';
+    margin-right: 4px;
+  }
+}
+
+.content {
+  flex: 1;
+  overflow: auto;
+}
+
+.placeholder {
+  padding: 32px;
+  text-align: center;
+  color: var(--colorNeutralForeground2);
+
+  p {
+    margin: 8px 0;
+  }
+
+  ul {
+    text-align: left;
+    max-width: 400px;
+    margin: 16px auto;
+    list-style-position: inside;
+  }
+
+  li {
+    margin: 8px 0;
+  }
+}
+

@@ -11,6 +11,7 @@ const initState: IGameEditorState = {
   isShowSidebar: true,
   isCodeMode: false,
   isShowDebugger: false,
+  isAgentMode: false,
 };
 
 export const createGameEditorStore = (gameDir: string) =>
@@ -27,6 +28,7 @@ export const createGameEditorStore = (gameDir: string) =>
         updateIsShowSidebar: (isShowSidebar) => set({ isShowSidebar }),
         updateIsCodeMode: (isCodeMode) => set({ isCodeMode }),
         updateIsShowDebugger: (isShowDebugger) => set({ isShowDebugger }),
+        updateIsAgentMode: (isAgentMode) => set({ isAgentMode }),
       }),
       {
         name: `game-editor-storage-${gameDir}`,
