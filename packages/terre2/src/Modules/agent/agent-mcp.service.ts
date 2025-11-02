@@ -38,7 +38,7 @@ export class AgentMcpService implements OnModuleDestroy {
     reject: (error: any) => void;
     timeout: NodeJS.Timeout;
   }>();
-  private buffer = Buffer.alloc(0);
+  private lineBuffer = '';
   private tools: McpTool[] = [];
   private initialized = false;
 
@@ -72,8 +72,8 @@ export class AgentMcpService implements OnModuleDestroy {
     });
 
     this.mcpProcess.stdout?.on('data', (chunk: Buffer) => {
-      this.buffer = Buffer.concat([this.buffer, chunk]);
-      this.processBuffer();
+      this.lineBuffer += chunk.toString('utf8');
+      this.processLines();
     });
 
     this.mcpProcess.stderr?.on('data', (chunk) => {
@@ -173,43 +173,26 @@ export class AgentMcpService implements OnModuleDestroy {
     this.stop();
   }
 
-  private processBuffer(): void {
-    while (true) {
-      // 查找 Content-Length 头
-      const headerEnd = this.buffer.indexOf('\r\n\r\n');
-      if (headerEnd === -1) {
-        // 没有完整的头，等待更多数据
-        break;
-      }
+  /**
+   * Process newline-delimited JSON messages from MCP stdout
+   * According to MCP spec: "Messages are delimited by newlines, and MUST NOT contain embedded newlines."
+   */
+  private processLines(): void {
+    const lines = this.lineBuffer.split('\n');
+    // Keep the last incomplete line in the buffer
+    this.lineBuffer = lines.pop() || '';
 
-      // 解析头部
-      const headerStr = this.buffer.slice(0, headerEnd).toString('utf8');
-      const match = /Content-Length: (\d+)/i.exec(headerStr);
-      if (!match) {
-        this.logger.error('Invalid LSP frame: missing Content-Length');
-        this.buffer = this.buffer.slice(headerEnd + 4);
+    for (const line of lines) {
+      const trimmed = line.trim();
+      if (!trimmed) {
         continue;
       }
 
-      const contentLength = parseInt(match[1], 10);
-      const messageStart = headerEnd + 4;
-      const messageEnd = messageStart + contentLength;
-
-      // 检查是否有完整的消息体
-      if (this.buffer.length < messageEnd) {
-        // 等待更多数据
-        break;
-      }
-
-      // 提取并解析消息
-      const messageStr = this.buffer.slice(messageStart, messageEnd).toString('utf8');
-      this.buffer = this.buffer.slice(messageEnd);
-
       try {
-        const message = JSON.parse(messageStr) as JsonRpcResponse;
+        const message = JSON.parse(trimmed) as JsonRpcResponse;
         this.handleResponse(message);
       } catch (error) {
-        this.logger.error(`Failed to parse JSON-RPC message: ${messageStr}`);
+        this.logger.error(`Failed to parse JSON-RPC message: ${trimmed}`);
       }
     }
   }
@@ -234,7 +217,7 @@ export class AgentMcpService implements OnModuleDestroy {
   private cleanup(): void {
     this.mcpProcess = null;
     this.projectRoot = null;
-    this.buffer = Buffer.alloc(0);
+    this.lineBuffer = '';
     this.tools = [];
     this.initialized = false;
 
@@ -271,6 +254,10 @@ export class AgentMcpService implements OnModuleDestroy {
     }
   }
 
+  /**
+   * Send a JSON-RPC request to MCP process
+   * According to MCP spec: "Messages are delimited by newlines"
+   */
   private async sendRequest(method: string, params?: any): Promise<any> {
     if (!this.mcpProcess) {
       throw new Error('MCP process not running');
@@ -292,12 +279,9 @@ export class AgentMcpService implements OnModuleDestroy {
 
       this.pendingRequests.set(id, { resolve, reject, timeout });
 
-      // 使用 LSP 帧格式发送
+      // 发送换行分隔的 JSON（MCP stdio 协议）
       const json = JSON.stringify(request);
-      const contentLength = Buffer.byteLength(json, 'utf8');
-      const frame = `Content-Length: ${contentLength}\r\n\r\n${json}`;
-
-      this.mcpProcess!.stdin?.write(frame);
+      this.mcpProcess!.stdin?.write(json + '\n');
     });
   }
 
@@ -322,24 +306,34 @@ export class AgentMcpService implements OnModuleDestroy {
   }
 
   private resolveMcpBinPath(): { command: string; args: string[] } | { command: null; args: [] } {
-    // Try multiple possible locations
-    const tsPath = path.resolve(__dirname, '../../../../../webgal_agent/packages/mcp-webgal/src/bin.ts');
-    const distPath = path.resolve(__dirname, '../../../../../webgal_agent/packages/mcp-webgal/dist/bin.js');
+    // 从 terre2 的位置向上查找 webgal_agent
+    // __dirname 在开发时是 src/Modules/agent，编译后是 dist/Modules/agent
+    // 需要向上找到 WebGAL_Terre，然后再向上找到 webgal_agent
+
+    const possiblePaths = [
+      // 从 src 目录（开发环境）
+      path.resolve(__dirname, '../../../../../webgal_agent/packages/mcp-webgal/dist/bin.js'),
+      path.resolve(__dirname, '../../../../../webgal_agent/packages/mcp-webgal/src/bin.ts'),
+      // 从 dist 目录（编译后）
+      path.resolve(__dirname, '../../../../../../../webgal_agent/packages/mcp-webgal/dist/bin.js'),
+      path.resolve(__dirname, '../../../../../../../webgal_agent/packages/mcp-webgal/src/bin.ts'),
+    ];
 
     // 优先使用已构建的 dist/bin.js
-    if (fs.existsSync(distPath)) {
-      this.logger.log(`Using compiled MCP binary: ${distPath}`);
-      return { command: 'node', args: [distPath] };
-    }
-
-    // Fallback 到 TypeScript 源码（开发环境）
-    if (fs.existsSync(tsPath)) {
-      this.logger.log(`Using TypeScript MCP source: ${tsPath}`);
-      return { command: 'npx', args: ['tsx', tsPath] };
+    for (const binPath of possiblePaths) {
+      if (fs.existsSync(binPath)) {
+        if (binPath.endsWith('.js')) {
+          this.logger.log(`Using compiled MCP binary: ${binPath}`);
+          return { command: 'node', args: [binPath] };
+        } else if (binPath.endsWith('.ts')) {
+          this.logger.log(`Using TypeScript MCP source: ${binPath}`);
+          return { command: 'npx', args: ['tsx', binPath] };
+        }
+      }
     }
 
     // 尝试全局安装的 mcp-webgal
-    this.logger.log('Trying globally installed mcp-webgal');
+    this.logger.warn('MCP binary not found in expected locations, trying globally installed mcp-webgal');
     return { command: 'mcp-webgal', args: [] };
   }
 }
