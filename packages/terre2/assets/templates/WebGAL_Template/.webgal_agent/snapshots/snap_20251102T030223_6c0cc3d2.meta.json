@@ -1,0 +1,7 @@
+{
+  "id": "snap_20251102T030223_6c0cc3d2",
+  "path": "game/scene/idempotency_test.txt",
+  "timestamp": 1762052543451,
+  "contentHash": "4a8d0bbad77aeef98e77315f1f6dd7d7bb88e6a691f059873adead8ee9d3e2ef",
+  "idempotencyKey": "test-1762052543"
+}

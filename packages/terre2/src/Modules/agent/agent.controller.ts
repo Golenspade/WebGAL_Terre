@@ -108,24 +108,32 @@ export class AgentController {
     }
   }
 
+  /**
+   * Map CONTRACTS.md error codes to HTTP status codes
+   * 完整映射所有错误码（包括 CONTRACTS.md 定义的 13 种 + 额外的 I/O 错误）
+   */
   private getHttpStatusFromErrorCode(code?: string): number {
     if (!code) return HttpStatus.INTERNAL_SERVER_ERROR;
 
     // 映射 CONTRACTS.md 错误码到 HTTP 状态码
     const errorCodeMap: Record<string, number> = {
-      E_NOT_FOUND: HttpStatus.NOT_FOUND,
-      E_BAD_ARGS: HttpStatus.BAD_REQUEST,
-      E_CONFLICT: HttpStatus.CONFLICT,
-      E_TIMEOUT: HttpStatus.REQUEST_TIMEOUT,
-      E_FORBIDDEN: HttpStatus.FORBIDDEN,
-      E_POLICY_VIOLATION: HttpStatus.FORBIDDEN,
-      E_TOOL_DISABLED: HttpStatus.SERVICE_UNAVAILABLE,
-      E_TOO_LARGE: HttpStatus.PAYLOAD_TOO_LARGE,
-      E_ENCODING: HttpStatus.UNPROCESSABLE_ENTITY,
-      E_PARSE_FAIL: HttpStatus.UNPROCESSABLE_ENTITY,
-      E_LINT_FAIL: HttpStatus.UNPROCESSABLE_ENTITY,
-      E_PREVIEW_FAIL: HttpStatus.INTERNAL_SERVER_ERROR,
-      E_INTERNAL: HttpStatus.INTERNAL_SERVER_ERROR,
+      // 4xx Client Errors
+      E_NOT_FOUND: HttpStatus.NOT_FOUND,                    // 404
+      E_BAD_ARGS: HttpStatus.BAD_REQUEST,                   // 400
+      E_CONFLICT: HttpStatus.CONFLICT,                      // 409
+      E_TIMEOUT: HttpStatus.REQUEST_TIMEOUT,                // 408
+      E_FORBIDDEN: HttpStatus.FORBIDDEN,                    // 403
+      E_POLICY_VIOLATION: HttpStatus.FORBIDDEN,             // 403
+      E_TOO_LARGE: HttpStatus.PAYLOAD_TOO_LARGE,            // 413
+      E_ENCODING: HttpStatus.UNPROCESSABLE_ENTITY,          // 422
+      E_PARSE_FAIL: HttpStatus.UNPROCESSABLE_ENTITY,        // 422
+      E_LINT_FAIL: HttpStatus.UNPROCESSABLE_ENTITY,         // 422
+
+      // 5xx Server Errors
+      E_TOOL_DISABLED: HttpStatus.SERVICE_UNAVAILABLE,      // 503
+      E_PREVIEW_FAIL: HttpStatus.INTERNAL_SERVER_ERROR,     // 500
+      E_INTERNAL: HttpStatus.INTERNAL_SERVER_ERROR,         // 500
+      E_IO: HttpStatus.INTERNAL_SERVER_ERROR,               // 500 (I/O 错误)
     };
 
     return errorCodeMap[code] || HttpStatus.INTERNAL_SERVER_ERROR;

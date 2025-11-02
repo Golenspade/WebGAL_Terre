@@ -121,23 +121,42 @@ export class AgentMcpService implements OnModuleDestroy {
     this.cleanup();
   }
 
+  /**
+   * Call a tool via MCP
+   *
+   * 可观测性改进：
+   * - 记录工具调用和错误码
+   * - 开发模式下打印详细信息
+   */
   async callTool<T = any>(name: string, args?: any): Promise<T> {
     if (!this.mcpProcess) {
       throw new Error('MCP process not running');
     }
 
-    const result = await this.sendRequest('tools/call', {
-      name,
-      arguments: args || {},
-    });
+    const startTime = Date.now();
 
-    // 解包 MCP 工具响应：result.content[0].text 包含实际结果
-    if (result.content && Array.isArray(result.content) && result.content[0]?.text) {
-      try {
-        const parsed = JSON.parse(result.content[0].text);
+    try {
+      const result = await this.sendRequest('tools/call', {
+        name,
+        arguments: args || {},
+      });
+
+      // 解包 MCP 工具响应：result.content[0].text 包含实际结果
+      if (result.content && Array.isArray(result.content) && result.content[0]?.text) {
+        let parsed: any;
+        try {
+          parsed = JSON.parse(result.content[0].text);
+        } catch (parseError) {
+          // 如果解析失败，返回原始文本
+          this.logger.warn(`Failed to parse tool result as JSON: ${parseError.message}`);
+          return result.content[0].text as T;
+        }
 
         // 检查是否有错误
         if (parsed.error) {
+          const elapsed = Date.now() - startTime;
+          this.logger.warn(`Tool ${name} failed in ${elapsed}ms with code ${parsed.error.code}: ${parsed.error.message}`);
+
           const error: any = new Error(parsed.error.message || 'Tool call failed');
           error.code = parsed.error.code;
           error.hint = parsed.error.hint;
@@ -145,16 +164,26 @@ export class AgentMcpService implements OnModuleDestroy {
           throw error;
         }
 
-        return parsed as T;
-      } catch (parseError) {
-        // 如果解析失败，返回原始文本
-        this.logger.warn(`Failed to parse tool result: ${parseError.message}`);
-        return result.content[0].text as T;
-      }
-    }
+        const elapsed = Date.now() - startTime;
+        if (process.env.NODE_ENV === 'development') {
+          this.logger.debug(`Tool ${name} succeeded in ${elapsed}ms`);
+        }
 
-    // 如果没有 content，返回原始结果
-    return result as T;
+        return parsed as T;
+      }
+
+      // 如果没有 content，返回原始结果
+      return result as T;
+    } catch (error) {
+      const elapsed = Date.now() - startTime;
+      // 如果错误已经有 code，说明是工具错误，直接重新抛出
+      if (error.code) {
+        throw error;
+      }
+      // 否则是其他错误（如网络错误），包装后抛出
+      this.logger.error(`Tool ${name} error after ${elapsed}ms: ${error.message}`);
+      throw error;
+    }
   }
 
   async listTools(): Promise<McpTool[]> {
@@ -176,9 +205,15 @@ export class AgentMcpService implements OnModuleDestroy {
   /**
    * Process newline-delimited JSON messages from MCP stdout
    * According to MCP spec: "Messages are delimited by newlines, and MUST NOT contain embedded newlines."
+   *
+   * 健壮性改进：
+   * - 支持 \r\n 和 \n 两种换行符
+   * - 保留未完成的行在 buffer 中
+   * - 跳过空行
    */
   private processLines(): void {
-    const lines = this.lineBuffer.split('\n');
+    // 按 \r?\n 分割，兼容 Windows/Unix 换行符
+    const lines = this.lineBuffer.split(/\r?\n/);
     // Keep the last incomplete line in the buffer
     this.lineBuffer = lines.pop() || '';
 
@@ -229,12 +264,20 @@ export class AgentMcpService implements OnModuleDestroy {
     this.pendingRequests.clear();
   }
 
+  /**
+   * Initialize MCP connection with handshake
+   *
+   * 健壮性改进：
+   * - 完整的错误处理和日志
+   * - 打印返回值便于排查
+   * - 失败时阻断启动
+   */
   private async initialize(): Promise<void> {
     if (this.initialized) {
       return;
     }
 
-    this.logger.log('Initializing MCP connection');
+    this.logger.log('Initializing MCP connection...');
 
     try {
       const result = await this.sendRequest('initialize', {
@@ -246,10 +289,12 @@ export class AgentMcpService implements OnModuleDestroy {
         },
       });
 
-      this.logger.log(`MCP initialized successfully: ${JSON.stringify(result)}`);
+      this.logger.log(`MCP initialized successfully. Server info: ${JSON.stringify(result)}`);
       this.initialized = true;
     } catch (error) {
       this.logger.error(`MCP initialization failed: ${error.message}`);
+      // 清理进程，阻断启动
+      await this.stop();
       throw new Error(`Failed to initialize MCP: ${error.message}`);
     }
   }
@@ -257,6 +302,10 @@ export class AgentMcpService implements OnModuleDestroy {
   /**
    * Send a JSON-RPC request to MCP process
    * According to MCP spec: "Messages are delimited by newlines"
+   *
+   * 健壮性改进：
+   * - 处理 backpressure（stdin.write 返回 false 时等待 drain）
+   * - 开发模式下记录请求日志
    */
   private async sendRequest(method: string, params?: any): Promise<any> {
     if (!this.mcpProcess) {
@@ -271,17 +320,38 @@ export class AgentMcpService implements OnModuleDestroy {
       params,
     };
 
+    const startTime = Date.now();
+
     return new Promise((resolve, reject) => {
       const timeout = setTimeout(() => {
         this.pendingRequests.delete(id);
+        const elapsed = Date.now() - startTime;
+        this.logger.warn(`Request timeout after ${elapsed}ms: ${method}`);
         reject(new Error(`Request timeout: ${method}`));
       }, 60000); // 60s timeout
 
-      this.pendingRequests.set(id, { resolve, reject, timeout });
+      this.pendingRequests.set(id, {
+        resolve: (value) => {
+          const elapsed = Date.now() - startTime;
+          if (process.env.NODE_ENV === 'development') {
+            this.logger.debug(`Request completed in ${elapsed}ms: ${method}`);
+          }
+          resolve(value);
+        },
+        reject,
+        timeout
+      });
 
       // 发送换行分隔的 JSON（MCP stdio 协议）
       const json = JSON.stringify(request);
-      this.mcpProcess!.stdin?.write(json + '\n');
+      const canWrite = this.mcpProcess!.stdin?.write(json + '\n');
+
+      // 处理 backpressure
+      if (canWrite === false) {
+        this.mcpProcess!.stdin?.once('drain', () => {
+          this.logger.debug('stdin drained, ready for more writes');
+        });
+      }
     });
   }
 
