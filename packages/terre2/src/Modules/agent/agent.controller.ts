@@ -8,12 +8,13 @@ import {
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { AgentMcpService } from './agent-mcp.service';
-import { CallToolDto, AgentStatusDto, SetProjectRootDto, ToolDto } from './agent.dto';
+import { CallToolDto, AgentStatusDto, SetProjectRootDto, ToolDto, ChatRequestDto, ChatResponseDto } from './agent.dto';
+import { ChatService } from './chat.service';
 
 @Controller('api/agent')
 @ApiTags('Agent')
 export class AgentController {
-  constructor(private readonly agentMcp: AgentMcpService) {}
+  constructor(private readonly agentMcp: AgentMcpService, private readonly chatSvc: ChatService) {}
 
   @Get('status')
   @ApiOperation({ summary: 'Get Agent MCP status' })
@@ -105,6 +106,21 @@ export class AgentController {
         },
         statusCode,
       );
+    }
+  }
+
+  @Post('chat')
+  @ApiOperation({ summary: 'Chat with LLM (MVP, no tool calls)' })
+  @ApiBody({ type: ChatRequestDto })
+  @ApiResponse({ status: 200, description: 'Assistant reply', type: ChatResponseDto })
+  async chat(@Body() dto: ChatRequestDto): Promise<ChatResponseDto> {
+    try {
+      return await this.chatSvc.chat(dto);
+    } catch (error: any) {
+      const message = error?.message || 'Chat failed';
+      // 将缺少密钥映射为 503，其它按 502 处理
+      const status = message.includes('DEEPSEEK_API_KEY') ? HttpStatus.SERVICE_UNAVAILABLE : HttpStatus.BAD_GATEWAY;
+      throw new HttpException(message, status);
     }
   }
 

@@ -1,19 +1,23 @@
 import { useState, useEffect } from 'react';
 import styles from './agentPanel.module.scss';
 import { t } from '@lingui/macro';
-import { Button, Spinner } from '@fluentui/react-components';
+import { Button, Spinner, Tab, TabList } from '@fluentui/react-components';
 import { agentClient } from '@/api/agentClient';
 import type { AgentStatusDto } from '@/api/Api';
 import { useGameEditorContext } from '@/store/useGameEditorStore';
 import AgentHeader from './components/AgentHeader';
 import AgentActions from './components/AgentActions';
 import AgentResults from './components/AgentResults';
+import SnapshotTimeline from './components/SnapshotTimeline';
+import RuntimeInfo from './components/RuntimeInfo';
+import ChatPanel from './components/ChatPanel';
 
 export default function AgentPanel() {
   const currentTag = useGameEditorContext((state) => state.currentTag);
   const [status, setStatus] = useState<AgentStatusDto | null>(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [activeTab, setActiveTab] = useState<'workspace' | 'chat' | 'snapshots'>('workspace');
 
   // 自动连接策略：进入 Agent 模式时尝试获取状态
   useEffect(() => {
@@ -88,11 +92,32 @@ export default function AgentPanel() {
 
       {status?.running ? (
         <>
-          <AgentActions
-            projectRoot={status.projectRoot || ''}
-            currentScene={currentTag?.name}
-          />
-          <AgentResults />
+          <RuntimeInfo />
+
+          <div className={styles.tabs}>
+            <TabList
+              selectedValue={activeTab}
+              onTabSelect={(_, data) => setActiveTab(data.value as 'workspace' | 'chat' | 'snapshots')}
+            >
+              <Tab value="workspace">{t`工作区`}</Tab>
+              <Tab value="chat">{t`对话`}</Tab>
+              <Tab value="snapshots">{t`快照时间线`}</Tab>
+            </TabList>
+          </div>
+
+          {activeTab === 'workspace' ? (
+            <>
+              <AgentActions
+                projectRoot={status.projectRoot || ''}
+                currentScene={currentTag?.name}
+              />
+              <AgentResults />
+            </>
+          ) : activeTab === 'chat' ? (
+            <ChatPanel />
+          ) : (
+            <SnapshotTimeline />
+          )}
         </>
       ) : (
         <div className={styles.placeholder}>

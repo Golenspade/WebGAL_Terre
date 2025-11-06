@@ -41,3 +41,27 @@ export class SetProjectRootDto {
   enableBrowser?: boolean;
 }
 
+export class ChatRequestDto {
+  @ApiProperty({ description: 'Existing session id (optional)', required: false })
+  sessionId?: string;
+
+  @ApiProperty({ description: 'User message' })
+  message: string;
+
+  @ApiProperty({ description: 'Optional context info', required: false })
+  context?: { scenePath?: string };
+}
+
+export class ChatResponseDto {
+  @ApiProperty({ description: 'Session id' })
+  sessionId: string;
+
+  @ApiProperty({ description: 'Assistant role' })
+  role: 'assistant';
+
+  @ApiProperty({ description: 'Assistant reply content' })
+  content: string;
+
+  @ApiProperty({ description: 'LLM usage info', required: false })
+  usage?: any;
+}

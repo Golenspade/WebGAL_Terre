@@ -71,6 +71,56 @@ export interface ListProjectResourcesResponse {
 }
 
 /**
+ * 快照时间线类型
+ */
+export interface SnapshotMetadata {
+  id: string;
+  path: string;
+  timestamp: number;
+  contentHash: string;
+  idempotencyKey?: string;
+}
+
+export interface ListSnapshotsResponse {
+  snapshots: SnapshotMetadata[];
+}
+
+export interface RestoreSnapshotResponse {
+  path: string;
+  content: string;
+}
+
+/**
+ * 运行时环境信息
+ */
+export interface RuntimeInfoResponse {
+  projectRoot: string;
+  snapshotRetention: number;
+  sandbox: {
+    forbiddenDirs: string[];
+    maxReadBytes: number;
+    textEncoding: string;
+  };
+  execution?: {
+    enabled: true;
+    allowedCommands: string[];
+    timeoutMs: number;
+    workingDir?: string;
+  };
+  browser?: {
+    enabled: true;
+    allowedHosts: string[];
+    timeoutMs: number;
+    screenshotDir?: string;
+  };
+  tools: string[];
+  server: {
+    name: string;
+    version: string;
+  };
+}
+
+/**
  * 读取文件响应
  */
 export interface ReadFileResponse {
@@ -177,6 +227,20 @@ export class AgentClient {
   }
 
   /**
+   * 列出快照（按时间降序）
+   */
+  async listSnapshots(params?: { limit?: number; path?: string }): Promise<ListSnapshotsResponse> {
+    return this.callTool<ListSnapshotsResponse>('list_snapshots', params || {});
+  }
+
+  /**
+   * 恢复快照内容（用于 Dry-run 预览或实际恢复）
+   */
+  async restoreSnapshot(params: { snapshotId: string }): Promise<RestoreSnapshotResponse> {
+    return this.callTool<RestoreSnapshotResponse>('restore_snapshot', params);
+  }
+
+  /**
    * 搜索文件
    */
   async searchFiles(params: {
@@ -206,10 +270,32 @@ export class AgentClient {
   async previewScene(scenePath: string): Promise<{ url: string }> {
     return this.callTool('preview_scene', { scenePath });
   }
+
+  /**
+   * 获取运行时环境信息
+   */
+  async getRuntimeInfo(): Promise<RuntimeInfoResponse> {
+    return this.callTool<RuntimeInfoResponse>('get_runtime_info', {});
+  }
+  /**
+   * 对话（MVP，不含工具调用）
+   */
+  async chat(params: { sessionId?: string; message: string; context?: any }): Promise<{ sessionId: string; role: 'assistant'; content: string; usage?: any }>{
+    const res = await fetch('/api/agent/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(params),
+    });
+    if (!res.ok) {
+      const text = await res.text();
+      throw new Error(`Chat failed: ${res.status} ${text}`);
+    }
+    return res.json();
+  }
+
 }
 
 /**
  * 单例实例
  */
 export const agentClient = new AgentClient();
-
