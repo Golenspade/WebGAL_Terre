@@ -1,9 +1,25 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 
 export type ChatMessage = {
-  role: 'system' | 'user' | 'assistant';
+  role: 'system' | 'user' | 'assistant' | 'tool';
   content: string;
+  name?: string; // for tool messages
 };
+
+export interface OpenAITool {
+  type: 'function';
+  function: {
+    name: string;
+    description?: string;
+    parameters?: any;
+  };
+}
+
+export interface ToolCall {
+  id: string;
+  type: 'function';
+  function: { name: string; arguments: string };
+}
 
 @Injectable()
 export class LlmClientService {
@@ -14,10 +30,23 @@ export class LlmClientService {
     return process.env.DEEPSEEK_API_KEY || '';
   }
 
-  async chat(messages: ChatMessage[]): Promise<{ content: string; usage?: any }>
+  async chat(
+    messages: ChatMessage[],
+    options?: { tools?: OpenAITool[] }
+  ): Promise<{ content: string; usage?: any; message?: any; toolCalls?: ToolCall[] }>
   {
     if (!this.apiKey) {
       throw new HttpException('DEEPSEEK_API_KEY is not set', HttpStatus.SERVICE_UNAVAILABLE);
+    }
+
+    const body: any = {
+      model: this.model,
+      messages,
+      stream: false,
+    };
+    if (options?.tools && options.tools.length > 0) {
+      body.tools = options.tools;
+      body.tool_choice = 'auto';
     }
 
     const resp = await fetch(`${this.baseURL}/chat/completions`, {
@@ -26,11 +55,7 @@ export class LlmClientService {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${this.apiKey}`,
       },
-      body: JSON.stringify({
-        model: this.model,
-        messages,
-        stream: false,
-      }),
+      body: JSON.stringify(body),
     });
 
     let json: any = null;
@@ -43,8 +68,10 @@ export class LlmClientService {
       throw new HttpException(`DeepSeek API error: ${msg}`, status);
     }
 
-    const content: string = json?.choices?.[0]?.message?.content ?? '';
-    return { content, usage: json?.usage };
+    const message = json?.choices?.[0]?.message ?? {};
+    const content: string = message?.content ?? '';
+    const toolCalls: ToolCall[] | undefined = message?.tool_calls as any;
+    return { content, usage: json?.usage, message, toolCalls };
   }
 }
 
