@@ -113,6 +113,15 @@ export interface RuntimeInfoResponse {
     timeoutMs: number;
     screenshotDir?: string;
   };
+  // 新增：策略文件路径与锁信息（若 MCP 端提供）
+  policiesPath?: string;
+  lock?: {
+    owner?: string; // 'cline' | 'terre' | 'manual' | 其他
+    pid?: number;
+    host?: string;
+    startedAt?: number; // epoch ms
+    version?: string;
+  };
   tools: string[];
   server: {
     name: string;
@@ -278,9 +287,9 @@ export class AgentClient {
     return this.callTool<RuntimeInfoResponse>('get_runtime_info', {});
   }
   /**
-   * 对话（MVP，不含工具调用）
+   * 对话（支持返回结构化步骤 steps）
    */
-  async chat(params: { sessionId?: string; message: string; context?: any }): Promise<{ sessionId: string; role: 'assistant'; content: string; usage?: any }>{
+  async chat(params: { sessionId?: string; message: string; context?: any }): Promise<{ sessionId: string; role: 'assistant'; content: string; steps?: Array<{ name: string; args?: any; blocked?: boolean; summary?: string; error?: { code?: string; message: string; hint?: string; details?: any } }>; usage?: any }>{
     const res = await fetch('/api/agent/chat', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },

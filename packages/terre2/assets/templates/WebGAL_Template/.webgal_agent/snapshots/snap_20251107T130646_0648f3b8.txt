@@ -30,4 +30,4 @@ miniAvatar:miniavatar.webp;
 setTextbox:hide;
 changeFigure:stand.webp;
 changeFigure:none -next;
-choose:选项:选择场景文件|选项2:选择场景文件;; Chat V1 Apply Test; Chat V1 Apply Test; Chat V1 Apply Test; Chat V1 Apply Test; Chat V1 Apply Test
+choose:选项:选择场景文件|选项2:选择场景文件;; Chat V1 Apply Test; Chat V1 Apply Test; Chat V1 Apply Test

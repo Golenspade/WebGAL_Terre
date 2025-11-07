@@ -18,6 +18,13 @@ export default function AgentPanel() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [activeTab, setActiveTab] = useState<'workspace' | 'chat' | 'snapshots'>('workspace');
+  const [runtimeMode, setRuntimeMode] = useState<'terre' | 'external'>(() => {
+    try {
+      const raw = localStorage.getItem('webgal.agent.runmode');
+      if (raw === 'external' || raw === 'terre') return raw;
+    } catch {}
+    return 'terre';
+  });
 
   // 自动连接策略：进入 Agent 模式时尝试获取状态
   useEffect(() => {
@@ -39,7 +46,15 @@ export default function AgentPanel() {
     }
   };
 
+  useEffect(() => {
+    try { localStorage.setItem('webgal.agent.runmode', runtimeMode); } catch {}
+  }, [runtimeMode]);
+
   const handleConnect = async (projectRoot: string) => {
+    if (runtimeMode !== 'terre') {
+      setError(t`当前为“外部 Cline”模式，Terre 不会启动 MCP。`);
+      return;
+    }
     try {
       setLoading(true);
       setError(null);
@@ -85,6 +100,8 @@ export default function AgentPanel() {
         status={status}
         loading={loading}
         error={error}
+        runtimeMode={runtimeMode}
+        onChangeRuntimeMode={setRuntimeMode}
         onConnect={handleConnect}
         onDisconnect={handleDisconnect}
         onRefreshTools={handleRefreshTools}
@@ -121,8 +138,17 @@ export default function AgentPanel() {
         </>
       ) : (
         <div className={styles.placeholder}>
-          <p>{t`请先连接到项目`}</p>
-          <p>{t`点击上方"连接"按钮开始`}</p>
+          {runtimeMode === 'terre' ? (
+            <>
+              <p>{t`请先连接到项目`}</p>
+              <p>{t`点击上方"连接"按钮开始`}</p>
+            </>
+          ) : (
+            <>
+              <p>{t`当前处于 “外部 Cline” 模式。`}</p>
+              <p>{t`请在 Cline 中启动 MCP；此处仅做观测与只读操作（连接按钮已隐藏）。`}</p>
+            </>
+          )}
         </div>
       )}
     </div>

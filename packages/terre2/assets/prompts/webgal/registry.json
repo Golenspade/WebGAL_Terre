@@ -1,0 +1,14 @@
+{
+  "system": [
+    "system/core.md",
+    "tools/policies.md",
+    "style/zh-cn.md"
+  ],
+  "facts": [
+    "domain/webgal_facts.md"
+  ],
+  "examples": [
+    "examples/e2e_edit_scene.md"
+  ]
+}
+

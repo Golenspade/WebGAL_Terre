@@ -55,8 +55,9 @@ export default function SnapshotTimeline() {
     });
   };
 
-  // 处理快照选择
+  // 处理快照选择（并发安全：进行中时禁止切换）
   const handleSelectSnapshot = async (snapshotId: string) => {
+    if (restoring || applyLoading) return;
     if (selectedId === snapshotId) {
       clearRestore();
     } else {

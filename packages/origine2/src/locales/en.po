@@ -34,7 +34,7 @@ msgstr "<0>Current template: {currentTemplateName}</0>"
 msgid "1, 2, 3, ..."
 msgstr "1, 2, 3, ..."
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:207
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:209
 msgid "Apply"
 msgstr ""
 
@@ -50,6 +50,11 @@ msgstr "BGM volume"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:109
 msgid "bgm:选择背景音乐;"
 msgstr "bgm: Choose a BGM;"
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:128
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:134
+msgid "Browser"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:149
 msgid "callScene:选择场景文件;"
@@ -83,7 +88,7 @@ msgstr "CSS Property Value"
 msgid "CSS 属性名："
 msgstr "CSS Property Name"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:200
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:202
 msgid "Dry-run"
 msgstr ""
 
@@ -94,6 +99,11 @@ msgstr ""
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:213
 msgid "end;"
 msgstr "end;"
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:113
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:119
+msgid "Exec"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:245
 msgid "getUserInput:;"
@@ -107,7 +117,7 @@ msgstr "Intro texts"
 msgid "intro:;"
 msgstr "intro:;"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:30
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:31
 msgid "IO 错误"
 msgstr ""
 
@@ -139,9 +149,21 @@ msgstr "playEffect: Choose a sound effect file;"
 msgid "playVideo:选择视频文件;"
 msgstr "playVideo: Choose a video file;"
 
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:108
+msgid "POSIX 格式前缀匹配，大小写敏感"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:142
+msgid "Retention"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:103
 msgid "RGB电影滤镜"
 msgstr "RGB film"
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:104
+msgid "Sandbox"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:101
 msgid "setAnimation:选择动画文件;"
@@ -353,7 +375,11 @@ msgstr "Use prepared apply target, if target set the ID, it won't apply"
 msgid "使用预设目标"
 msgstr "Use prepared target"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:154
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:102
+msgid "例如: game/scene"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:156
 msgid "例如: game/scene/start.txt"
 msgstr ""
 
@@ -429,6 +455,14 @@ msgstr "Stop the BGM"
 msgid "像素"
 msgstr "pixel"
 
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:185
+msgid "允许主机"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:172
+msgid "允许命令"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:104
 msgid "光辉电影滤镜"
 msgstr "Godray film"
@@ -455,6 +489,8 @@ msgstr "Associated figure"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:148
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:137
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:119
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:134
 #: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:150
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:166
@@ -486,7 +522,7 @@ msgstr "Hide the background"
 msgid "关闭预览窗口"
 msgstr "Close the preview window"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:165
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:167
 msgid "内容"
 msgstr ""
 
@@ -498,13 +534,17 @@ msgstr "Inner Text"
 msgid "内边距"
 msgstr "Padding"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:29
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:30
 msgid "内部错误"
 msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:47
 msgid "最大宽度"
 msgstr "Max Width"
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:158
+msgid "最大读取"
+msgstr ""
 
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:50
 msgid "最大高度"
@@ -535,7 +575,7 @@ msgstr ""
 msgid "写入成功"
 msgstr ""
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:177
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:179
 msgid "写入模式"
 msgstr ""
 
@@ -623,6 +663,7 @@ msgid "删除游戏"
 msgstr "Delete game"
 
 #: src/components/Assets/Assets.tsx:476
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:138
 msgid "刷新"
 msgstr "Refresh"
 
@@ -650,6 +691,14 @@ msgstr "Functional Area"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGFontWeight.tsx:16
 msgid "加粗"
 msgstr "Bold"
+
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:164
+msgid "加载快照..."
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:53
+msgid "加载运行环境..."
+msgstr ""
 
 #: src/pages/editor/EditorSidebar/EditorSidebar.tsx:113
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:251
@@ -693,6 +742,7 @@ msgstr "New version detected"
 #: src/components/IconCreator/IconCreator.tsx:775
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:67
 #: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:91
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:241
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
 msgstr "Cancel"
@@ -705,7 +755,12 @@ msgstr "Unpin"
 msgid "变换"
 msgstr "Transform"
 
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:263
+msgid "变更预览"
+msgstr ""
+
 #: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:125
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:194
 msgid "可用工具"
 msgstr ""
 
@@ -728,6 +783,10 @@ msgstr "Right side figure"
 msgid "右对齐"
 msgstr "Right Align"
 
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:207
+msgid "名称"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:112
 msgid "启动、切换或停止背景音乐的播放"
 msgstr "Start, switch or stop the playback of background music"
@@ -748,6 +807,18 @@ msgstr "Enabled"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/PlayVideo.tsx:43
 msgid "启用视频跳过"
 msgstr "Enable video skipping"
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:113
+msgid "命令"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:169
+msgid "命令执行"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:216
+msgid "哈希"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:387
 msgid "唇形同步与眨眼"
@@ -827,6 +898,23 @@ msgstr "Scenes and branches"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeCallScene.tsx:27
 msgid "场景文件"
 msgstr "Scene file"
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:128
+msgid "域名"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:193
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:287
+msgid "复制 ID"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:86
+msgid "复制策略"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:79
+msgid "复制策略 JSON"
+msgstr ""
 
 #: src/pages/templateEditor/TemplateEditorSidebar/ComponentTree/ComponentTree.tsx:41
 msgid "外层文本"
@@ -913,6 +1001,7 @@ msgid "对比度"
 msgstr "Contrast"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:172
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:103
 msgid "对话"
 msgstr "Dialogue"
 
@@ -974,6 +1063,10 @@ msgstr "Mini avatar container"
 msgid "小头像文件"
 msgstr "Avatar file"
 
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:174
+msgid "尝试调整路径过滤条件"
+msgstr ""
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:57
 msgid "层级顺序"
 msgstr "Z Index"
@@ -994,7 +1087,19 @@ msgstr "Show avatar"
 msgid "属性"
 msgstr "Property"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:27
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:102
+msgid "工作区"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:174
+msgid "工作目录"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:75
+msgid "工具"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:28
 msgid "工具已禁用"
 msgstr ""
 
@@ -1016,6 +1121,12 @@ msgstr "Left align"
 #: src/pages/dashboard/DashBoard.tsx:108
 msgid "已创建"
 msgstr "Created"
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:79
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:193
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:287
+msgid "已复制!"
+msgstr ""
 
 #: src/components/Assets/Assets.tsx:354
 #: src/components/Assets/Assets.tsx:413
@@ -1042,6 +1153,10 @@ msgstr "Documents"
 msgid "常规演出"
 msgstr "Regular performance"
 
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:221
+msgid "幂等键"
+msgstr ""
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundSize.tsx:28
 msgid "平铺"
 msgstr "Tiling"
@@ -1050,9 +1165,17 @@ msgstr "Tiling"
 msgid "应用"
 msgstr "Apply"
 
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:274
+msgid "应用中..."
+msgstr ""
+
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:168
 msgid "应用的模板"
 msgstr "Applied template"
+
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:131
+msgid "应用过滤"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:385
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:311
@@ -1063,8 +1186,8 @@ msgstr "Apply color changes"
 msgid "延迟时间（秒）"
 msgstr "Delay time (seconds)"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:58
-#: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:40
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:74
+#: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:41
 msgid "建议"
 msgstr ""
 
@@ -1072,6 +1195,8 @@ msgstr ""
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:137
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:113
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:128
 msgid "开启"
 msgstr "On"
 
@@ -1093,16 +1218,33 @@ msgid "德语"
 msgstr "German"
 
 #: src/pages/editor/MainArea/AgentPanel/components/AgentResults.tsx:40
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:247
 msgid "快照 ID"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:104
+msgid "快照时间线"
 msgstr ""
 
 #: src/pages/dashboard/DashBoard.tsx:166
 msgid "忽略此版本"
 msgstr "Ignore this version"
 
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:282
+msgid "恢复成功！"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:235
+msgid "恢复预览"
+msgstr ""
+
 #: src/pages/dashboard/GameElement.tsx:148
 msgid "我确定要删除游戏"
 msgstr "I'm sure to delete the game"
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:187
+msgid "截图目录"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Intro.tsx:283
 msgid "手动触发下一句"
@@ -1119,6 +1261,10 @@ msgstr "Manually enter ID"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:62
 msgid "打开效果编辑器"
 msgstr "Open effect editor"
+
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:175
+msgid "执行写入操作后会自动创建快照"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/GraphicalEditor.tsx:259
 msgid "执行到此句"
@@ -1222,7 +1368,16 @@ msgstr "Play sound effect"
 msgid "播放视频"
 msgstr "Play video"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:49
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:42
+msgid "操作被禁止。请检查 policies.json 中的相关权限配置。"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:40
+msgid "操作被策略禁止。请检查 policies.json 中的 sandbox.forbiddenDirs 或相关配置。"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:65
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:95
 msgid "收起"
 msgstr ""
 
@@ -1273,6 +1428,10 @@ msgstr "Sound effect volume"
 msgid "效果音文件"
 msgstr "Sound effect file"
 
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:112
+msgid "数量限制"
+msgstr ""
+
 #: src/pages/editor/Topbar/Topbar.tsx:77
 #~ msgid "文件"
 #~ msgstr "File"
@@ -1285,7 +1444,7 @@ msgstr "File name"
 msgid "文件大小"
 msgstr "File size"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:105
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:107
 msgid "文件已被修改，请重新执行 Dry-run 并检查差异"
 msgstr ""
 
@@ -1297,7 +1456,15 @@ msgstr ""
 msgid "文件未找到"
 msgstr ""
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:23
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:43
+msgid "文件超过大小限制。可在 policies.json 中调整 sandbox.maxReadBytes 参数（当前限制可在运行环境中查看）。"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:250
+msgid "文件路径"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:24
 msgid "文件过大"
 msgstr ""
 
@@ -1381,6 +1548,10 @@ msgstr "Create new template"
 #: src/pages/dashboard/Sidebar.tsx:97
 msgid "新建游戏"
 msgstr "Create new game"
+
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:285
+msgid "新快照 ID"
+msgstr ""
 
 #: src/components/Assets/Assets.tsx:361
 msgid "新文件名"
@@ -1508,7 +1679,15 @@ msgstr "General dialogue"
 msgid "智能助手"
 msgstr ""
 
-#: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:28
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:171
+msgid "暂无快照"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:205
+msgid "服务器信息"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:29
 msgid "未发现问题"
 msgstr ""
 
@@ -1575,16 +1754,16 @@ msgstr "Title background image"
 msgid "标题背景音乐"
 msgstr "Title background music"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:214
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:216
 msgid "校验"
 msgstr ""
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:26
-#: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:25
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:27
+#: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:26
 msgid "校验失败"
 msgstr ""
 
-#: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:25
+#: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:26
 msgid "校验通过"
 msgstr ""
 
@@ -1625,7 +1804,11 @@ msgstr "Blur"
 msgid "櫻花"
 msgstr "Cherry blossoms"
 
-#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:72
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:256
+msgid "正在生成 Diff..."
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:76
 msgid "正在连接..."
 msgstr ""
 
@@ -1644,6 +1827,10 @@ msgstr "This command will end the game"
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:140
 msgid "永不换行"
 msgstr "Never wrap"
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:155
+msgid "沙箱配置"
+msgstr ""
 
 #: src/pages/editor/Topbar/tabs/GameConfig/GameConfig.tsx:239
 msgid "法语"
@@ -1668,6 +1855,10 @@ msgstr "Comment"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Comment.tsx:22
 msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "Comments are only visible when editing and will not be executed in the game"
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:182
+msgid "浏览器"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Bgm.tsx:73
 msgid "淡入淡出"
@@ -1778,7 +1969,7 @@ msgstr "Source code"
 msgid "滤镜"
 msgstr "Filter"
 
-#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:100
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:125
 msgid "点击上方\"连接\"按钮开始"
 msgstr ""
 
@@ -1794,6 +1985,10 @@ msgstr "Click or press Backspace to delete the old separator. Enter a new separa
 msgid "点状电影滤镜"
 msgstr "Dot film filter"
 
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:208
+msgid "版本"
+msgstr ""
+
 #: src/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab.tsx:50
 msgid "特殊演出"
 msgstr "Special performance"
@@ -1807,7 +2002,7 @@ msgstr "Percentage. 0-100 valid"
 msgid "目前没有打开任何文件"
 msgstr "No file currently open"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:150
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:152
 msgid "目标文件"
 msgstr ""
 
@@ -1843,6 +2038,10 @@ msgstr "Are you sure you want to delete the \"{templateName}\" template?"
 msgid "确认"
 msgstr ""
 
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:274
+msgid "确认恢复"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/GetUserInput.tsx:53
 msgid "确认按钮文本"
 msgstr "Confirm button text"
@@ -1867,7 +2066,12 @@ msgstr "Video file"
 msgid "视频选项"
 msgstr "Video options"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:21
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:105
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:161
+msgid "禁止目录"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:22
 msgid "禁止访问"
 msgstr ""
 
@@ -1913,7 +2117,7 @@ msgstr "ID of figure illustration"
 msgid "立绘文件"
 msgstr "Figure file"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:22
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:23
 msgid "策略违规"
 msgstr ""
 
@@ -2007,10 +2211,11 @@ msgid "缓动类型"
 msgstr "Ease type"
 
 #: src/pages/editor/MainArea/AgentPanel/components/AgentResults.tsx:26
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:157
 msgid "编码"
 msgstr ""
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:24
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:25
 msgid "编码错误"
 msgstr ""
 
@@ -2152,7 +2357,7 @@ msgstr "Get character input from user"
 msgid "获取输入"
 msgstr "Get input"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:34
+#: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:35
 msgid "行"
 msgstr ""
 
@@ -2173,7 +2378,7 @@ msgstr "Clip Shape"
 msgid "要删除属性{0}吗？"
 msgstr "Delete the property {0}?"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:182
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:184
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGBackgroundSize.tsx:29
 msgid "覆盖"
 msgstr "Coverage"
@@ -2210,7 +2415,7 @@ msgstr "Role Name Text Box Background"
 msgid "角落头像"
 msgstr "Corner avatar"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:25
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:26
 msgid "解析失败"
 msgstr ""
 
@@ -2268,6 +2473,10 @@ msgstr "Set custom cascade selector separator (press Enter to confirm after inpu
 #~ msgid "设置转场效果"
 #~ msgstr "Set transition effect"
 
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:39
+msgid "该功能未启用。请在 policies.json 中设置 \"enabled\": true 以启用此功能。"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Unrecognized.tsx:12
 msgid "该指令没有被识别，请打开脚本编辑模式以手动编辑"
 msgstr "This command is not recognized, please open script editing mode to edit manually"
@@ -2276,11 +2485,12 @@ msgstr "This command is not recognized, please open script editing mode to edit 
 msgid "该文件类型不支持预览"
 msgstr "This file type does not support preview"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:49
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:65
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:95
 msgid "详情"
 msgstr ""
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:63
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:79
 msgid "详细信息"
 msgstr ""
 
@@ -2301,23 +2511,23 @@ msgstr "Language"
 msgid "语音"
 msgstr "Voice"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:79
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:81
 msgid "请先执行 Dry-run"
 msgstr ""
 
-#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:99
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:124
 msgid "请先连接到项目"
 msgstr ""
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:35
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:37
 msgid "请指定文件路径"
 msgstr ""
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:54
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:56
 msgid "请指定文件路径和内容"
 msgstr ""
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:115
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:117
 msgid "请指定文件路径或内容"
 msgstr ""
 
@@ -2325,7 +2535,7 @@ msgstr ""
 msgid "请输入搜索提示词..."
 msgstr "Please enter a search hint..."
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:193
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:195
 msgid "读取场景"
 msgstr ""
 
@@ -2353,7 +2563,7 @@ msgstr "Call Scene"
 msgid "调用场景，新场景结束后返回父场景"
 msgstr "Call scene, return to parent scene after new scene ends"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:14
+#: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:15
 msgid "警告"
 msgstr ""
 
@@ -2361,7 +2571,7 @@ msgstr ""
 msgid "资源"
 msgstr "Assets"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:221
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:223
 msgid "资源列表"
 msgstr ""
 
@@ -2386,6 +2596,8 @@ msgid "起点弹跳"
 msgstr "Bounce in"
 
 #: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:20
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:171
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:184
 msgid "超时"
 msgstr ""
 
@@ -2394,11 +2606,27 @@ msgstr ""
 msgid "跨语句动画"
 msgstr "Keep animation"
 
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:212
+msgid "路径"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:21
+msgid "路径禁止"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:41
+msgid "路径被策略禁止访问。请检查 policies.json 中的 sandbox.forbiddenDirs 配置。"
+msgstr ""
+
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:100
+msgid "路径过滤"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:94
 msgid "软化（0-1）"
 msgstr "Softness (0-1)"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:168
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:170
 msgid "输入或编辑场景内容..."
 msgstr ""
 
@@ -2429,6 +2657,10 @@ msgstr "Filter files"
 msgid "运行平台"
 msgstr "Platform"
 
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:73
+msgid "运行环境"
+msgstr ""
+
 #: src/pages/dashboard/GameElement.tsx:123
 #: src/pages/dashboard/GameElement.tsx:155
 #: src/pages/dashboard/TemplateElement.tsx:117
@@ -2452,7 +2684,7 @@ msgstr ""
 msgid "连续执行"
 msgstr "Execute Continuously"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:183
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:185
 msgid "追加"
 msgstr ""
 
@@ -2626,6 +2858,10 @@ msgstr "Rename template directory"
 msgid "重命名游戏目录"
 msgstr "Rename game directory"
 
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:155
+msgid "重新 Dry-run"
+msgstr ""
+
 #: src/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab.tsx:63
 msgid "鉴赏"
 msgstr "Appreciation"
@@ -2646,7 +2882,7 @@ msgstr "Appreciation Asset File"
 msgid "鉴赏音乐"
 msgstr "Appreciation Music"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:32
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:33
 msgid "错误"
 msgstr ""
 
@@ -2715,6 +2951,10 @@ msgstr "Project Homepage"
 msgid "项目根"
 msgstr ""
 
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:150
+msgid "项目根目录"
+msgstr ""
+
 #: src/pages/editor/MainArea/AgentPanel/components/ResourcesList.tsx:20
 msgid "项目资源"
 msgstr ""
@@ -2731,7 +2971,7 @@ msgstr "Preview"
 msgid "预览图标"
 msgstr "Preview icon"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:28
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:29
 msgid "预览失败"
 msgstr ""
 
@@ -2750,6 +2990,10 @@ msgstr "Color"
 msgid "颜色调整"
 msgstr "Color adjustment"
 
+#: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:14
+msgid "风格/样式"
+msgstr ""
+
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:80
 msgid "饱和度"
 msgstr "Saturation"
@@ -2766,9 +3010,13 @@ msgstr "Gaussian Blur"
 #: src/pages/editor/GraphicalEditor/components/EffectEditor.tsx:332
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:146
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:58
-#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:160
+#: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:162
 msgid "默认"
 msgstr "Default"
+
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:122
+msgid "默认 50，最大 1000"
+msgstr ""
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:516
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:526

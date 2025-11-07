@@ -49,6 +49,27 @@ export class AgentMcpService implements OnModuleDestroy {
     }
 
     this.projectRoot = projectRoot;
+
+    // Lock check: avoid starting MCP if another owner holds the lock
+    try {
+      const lockPath = path.join(projectRoot, '.webgal_agent', 'agent.lock');
+      if (fs.existsSync(lockPath)) {
+        const raw = fs.readFileSync(lockPath, 'utf8');
+        try {
+          const lock = JSON.parse(raw) as { owner?: string; pid?: number; host?: string; startedAt?: number; version?: string };
+          const owner = (lock?.owner || '').toLowerCase();
+          if (owner && owner !== 'terre') {
+            // Informative message; frontend可据此提示切换至外部模式或停止另一端
+            throw new Error(`[LOCK] E_LOCK_HELD: 当前已有进程持有锁（owner=${lock.owner}, pid=${lock.pid}, host=${lock.host}）。请先在该端停止，或在 Terre 选择“外部 Cline”模式。`);
+          }
+        } catch (e: any) {
+          this.logger.warn(`Failed to parse lock file: ${e?.message || 'unknown'}`);
+        }
+      }
+    } catch (e) {
+      // 若上面抛错，向上层抛出阻断启动
+      throw e;
+    }
     const { command, args: binArgs } = this.resolveMcpBinPath();
 
     if (!command) {
@@ -397,7 +418,7 @@ export class AgentMcpService implements OnModuleDestroy {
           return { command: 'node', args: [binPath] };
         } else if (binPath.endsWith('.ts')) {
           this.logger.log(`Using TypeScript MCP source: ${binPath}`);
-          return { command: 'npx', args: ['tsx', binPath] };
+          return { command: 'npx', args: ['-y', 'tsx', binPath] };
         }
       }
     }

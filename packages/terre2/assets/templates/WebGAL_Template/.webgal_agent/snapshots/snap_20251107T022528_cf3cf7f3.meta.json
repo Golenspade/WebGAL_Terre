@@ -1,0 +1,7 @@
+{
+  "id": "snap_20251107T022528_cf3cf7f3",
+  "path": "game/scene/agent_write_test.txt",
+  "timestamp": 1762482328198,
+  "contentHash": "5bacd44c6b5f74f629f0c37498f4438b9d11d5ee7f20fb57ad82f8758f367141",
+  "idempotencyKey": "agent-v2-20251107T022528Z"
+}

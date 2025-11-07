@@ -21,11 +21,7 @@ import './logger';
 import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 
-let WEBGAL_PORT = 3000; // 默认端口
-export const version_number = `4.5.16`;
-if (env.WEBGAL_PORT) {
-  WEBGAL_PORT = Number.parseInt(env.WEBGAL_PORT);
-}
+export const version_number = `4.5.16`; // 端口读取移动至 bootstrap，确保先加载 .env
 
 /**
  * 确保模板文件存在
@@ -89,9 +85,44 @@ async function ensureTemplateFiles() {
   }
 }
 
+// 轻量 .env 加载器：优先读取 .env 与 .env.local，若进程环境未设置则赋值
+async function loadEnvFiles() {
+  const cwd = process.cwd();
+  const files = ['.env', '.env.local'];
+  for (const file of files) {
+    const full = path.join(cwd, file);
+    try {
+      if (await fsExtra.pathExists(full)) {
+        const content = await fsExtra.readFile(full, 'utf-8');
+        for (const rawLine of content.split(/\r?\n/)) {
+          const line = rawLine.trim();
+          if (!line || line.startsWith('#')) continue;
+          const idx = line.indexOf('=');
+          if (idx <= 0) continue;
+          const key = line.slice(0, idx).trim();
+          let value = line.slice(idx + 1).trim();
+          if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith('\'') && value.endsWith('\''))) {
+            value = value.slice(1, -1);
+          }
+          if (process.env[key] === undefined) {
+            process.env[key] = value;
+          }
+        }
+      }
+    } catch (e) {
+      console.warn(`[env] Failed to load ${full}:`, e);
+    }
+  }
+}
+
+
 async function bootstrap() {
   // 在启动应用前确保模板文件存在
   await ensureTemplateFiles();
+
+  // 尝试加载 .env 与 .env.local（不覆盖已存在的进程变量）
+  await loadEnvFiles();
+  const port = Number.parseInt(process.env.WEBGAL_PORT || '3000', 10);
 
   const app = await NestFactory.create(AppModule);
 
@@ -113,11 +144,15 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   app.useWebSocketAdapter(new WsAdapter(app));
-  await app.listen(WEBGAL_PORT + 1);
+
+  await app.listen(port + 1, '127.0.0.1');
+  console.log(`WebGAL Terre ${version_number} starting at ${process.cwd()}`);
+  console.log(`[Terre] Listening on http://127.0.0.1:${port + 1}`);
+  if ((process?.env?.NODE_ENV ?? '') !== 'development' && !global['isElectron']) {
+    _open(`http://localhost:${port + 1}`);
+  }
 }
 
-bootstrap().then(() => {
-  console.log(`WebGAL Terre ${version_number} starting at ${process.cwd()}`);
-  if ((process?.env?.NODE_ENV ?? '') !== 'development' && !global['isElectron'])
-    _open(`http://localhost:${WEBGAL_PORT + 1}`);
+bootstrap().catch((err) => {
+  console.error('Bootstrap failed:', err);
 });

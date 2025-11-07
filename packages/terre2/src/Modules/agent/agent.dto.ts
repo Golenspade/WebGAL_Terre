@@ -52,6 +52,21 @@ export class ChatRequestDto {
   context?: { scenePath?: string };
 }
 
+export class ChatStepErrorDto {
+  @ApiProperty({ required: false }) code?: string;
+  @ApiProperty() message: string;
+  @ApiProperty({ required: false }) hint?: string;
+  @ApiProperty({ required: false }) details?: any;
+}
+
+export class ChatStepDto {
+  @ApiProperty() name: string;
+  @ApiProperty({ required: false }) args?: any;
+  @ApiProperty({ required: false, description: 'Whether the step was blocked (e.g., write/restore requires confirmation)' }) blocked?: boolean;
+  @ApiProperty({ required: false, description: 'Short human-readable summary of result or error' }) summary?: string;
+  @ApiProperty({ required: false, type: ChatStepErrorDto }) error?: ChatStepErrorDto;
+}
+
 export class ChatResponseDto {
   @ApiProperty({ description: 'Session id' })
   sessionId: string;
@@ -61,6 +76,9 @@ export class ChatResponseDto {
 
   @ApiProperty({ description: 'Assistant reply content' })
   content: string;
+
+  @ApiProperty({ description: 'Structured tool call steps (optional)', required: false, type: [ChatStepDto] })
+  steps?: ChatStepDto[];
 
   @ApiProperty({ description: 'LLM usage info', required: false })
   usage?: any;
