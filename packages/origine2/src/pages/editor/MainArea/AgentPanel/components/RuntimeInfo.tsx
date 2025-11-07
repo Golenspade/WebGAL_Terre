@@ -5,6 +5,7 @@ import {
   Badge,
   Tooltip,
   Spinner,
+  Link,
 } from '@fluentui/react-components';
 import {
   ChevronDown20Regular,
@@ -12,6 +13,7 @@ import {
   Copy20Regular,
   CheckmarkCircle20Filled,
   ArrowSync20Regular,
+  Book20Regular,
 } from '@fluentui/react-icons';
 import { useRuntimeInfoStore } from '../store/useRuntimeInfoStore';
 import ErrorBanner from './ErrorBanner';
@@ -102,6 +104,14 @@ export default function RuntimeInfo() {
               {t`刷新`}
             </Button>
           </Tooltip>
+          <Button
+            icon={<Book20Regular />}
+            size="small"
+            appearance="subtle"
+            onClick={() => window.open('/docs/cline-integration.html', '_blank', 'noreferrer')}
+          >
+            {t`Cline 集成指南`}
+          </Button>
           <Button
             icon={expanded ? <ChevronUp20Regular /> : <ChevronDown20Regular />}
             size="small"

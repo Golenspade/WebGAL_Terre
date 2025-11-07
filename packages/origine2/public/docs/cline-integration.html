@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>WebGAL × Cline 集成指南（简版）</title>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, 'Noto Sans', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif; line-height: 1.6; padding: 24px; color: #222; }
+    h1 { font-size: 20px; margin: 0 0 12px; }
+    h2 { font-size: 16px; margin: 24px 0 8px; }
+    code, kbd { background: #f6f6f6; border: 1px solid #eee; border-radius: 4px; padding: 0 4px; }
+    .callout { background: #f7fbff; border: 1px solid #d0e7ff; border-radius: 6px; padding: 12px; margin: 16px 0; }
+    .small { color: #666; font-size: 12px; }
+    a { color: #0b5fff; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    ul { margin: 8px 0 16px 20px; }
+  </style>
+</head>
+<body>
+  <h1>WebGAL × Cline 集成指南（简版）</h1>
+  <p class="small">本页为简要指引，详细说明请参考仓库中的完整文档。</p>
+
+  <div class="callout">
+    <strong>两种运行模式：</strong>
+    <ul>
+      <li><strong>Terre 托管</strong>：在 Terre 中启动 MCP（带锁机制，避免冲突）。</li>
+      <li><strong>外部 Cline</strong>：由 Cline 启动 MCP，Terre 面板仅做“只读观测”（不可 Apply 回滚）。</li>
+    </ul>
+  </div>
+
+  <h2>1. 在 Cline 中启用 WebGAL MCP</h2>
+  <ul>
+    <li>打开 Cline，确保已安装并启用 MCP 支持。</li>
+    <li>将 WebGAL MCP 配置到 Cline（示例配置与说明见完整文档）。</li>
+    <li>在 Cline 中启动 MCP，并确认项目根目录正确。</li>
+  </ul>
+
+  <h2>2. 在 Terre 面板切换为“外部 Cline”模式</h2>
+  <ul>
+    <li>打开 <em>Agent 面板</em> 头部，切换运行模式为 <strong>外部 Cline</strong>。</li>
+    <li>此模式下连接/断开按钮会隐藏；快照时间线可浏览与预览 Diff，但 <strong>禁止 Apply</strong>。</li>
+  </ul>
+
+  <h2>3. 常见问题</h2>
+  <ul>
+    <li><strong>锁冲突</strong>：若 Terre 端提示 <code>[LOCK] E_LOCK_HELD</code>，说明已有外部进程（如 Cline）持有锁，请停止外部进程或切换为“外部 Cline”模式。</li>
+    <li><strong>只读限制</strong>：外部 Cline 模式为避免并发竞态，Terre 禁止 Apply 回滚。如需在 Terre 中回滚，请切换回“Terre 托管”模式。</li>
+  </ul>
+
+  <h2>完整文档</h2>
+  <p>
+    <a href="../../../../webgal_agent/docs/CLINE_WEBGAL_INTEGRATION.md" target="_blank" rel="noreferrer">CLINE_WEBGAL_INTEGRATION.md（仓库内）</a>
+  </p>
+
+  <p class="small">提示：若上述相对路径在你的部署环境不可访问，请在代码仓库中搜索 <code>CLINE_WEBGAL_INTEGRATION.md</code> 查看。</p>
+</body>
+</html>
+
