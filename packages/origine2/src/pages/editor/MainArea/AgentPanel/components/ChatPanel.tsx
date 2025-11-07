@@ -180,7 +180,7 @@ export default function ChatPanel() {
           style={{ flex: 1, height: 64, resize: 'vertical' }}
         />
         <Button appearance="subtle" onClick={clearSession} disabled={sending}>清空对话</Button>
-        <Button appearance="primary" onClick={send} disabled={sending || !input.trim()}>发送</Button>
+        <Button appearance="primary" onClick={() => send()} disabled={sending || !input.trim()}>发送</Button>
       </div>
 
       <ChatWriteConfirm open={confirmOpen} onOpenChange={setConfirmOpen} args={confirmArgs} />

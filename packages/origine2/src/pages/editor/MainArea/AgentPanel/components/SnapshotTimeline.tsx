@@ -17,7 +17,7 @@ import DiffViewer from './DiffViewer';
 import ErrorBanner from './ErrorBanner';
 import styles from './snapshotTimeline.module.scss';
 
-export default function SnapshotTimeline() {
+export default function SnapshotTimeline({ runtimeMode }: { runtimeMode?: 'terre' | 'external' }) {
   const {
     snapshots,
     loading,
@@ -270,10 +270,15 @@ export default function SnapshotTimeline() {
                   <Button
                     appearance="primary"
                     onClick={handleApply}
-                    disabled={applyLoading}
+                    disabled={applyLoading || runtimeMode === 'external'}
                   >
-                    {applyLoading ? t`应用中...` : t`确认恢复`}
+                    {applyLoading ? t`应用中...` : runtimeMode === 'external' ? t`只读模式（禁用）` : t`确认恢复`}
                   </Button>
+                  {runtimeMode === 'external' && (
+                    <div className={styles.hint}>
+                      {t`外部 Cline 模式：这里仅预览 Diff，回滚应用被禁用以避免竞态。`}
+                    </div>
+                  )}
                 </div>
               )}
 

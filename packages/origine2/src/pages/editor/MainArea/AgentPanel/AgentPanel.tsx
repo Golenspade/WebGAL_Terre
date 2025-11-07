@@ -133,7 +133,7 @@ export default function AgentPanel() {
           ) : activeTab === 'chat' ? (
             <ChatPanel />
           ) : (
-            <SnapshotTimeline />
+            <SnapshotTimeline runtimeMode={runtimeMode} />
           )}
         </>
       ) : (
