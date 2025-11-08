@@ -17,6 +17,10 @@ msgstr ""
 msgid ";注释"
 msgstr ";注释"
 
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:63
+msgid "（当前 maxReadBytes = {max}）"
+msgstr "（当前 maxReadBytes = {max}）"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor.tsx:32
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/propertyEditor/WGCommonLengthEditor4Values.tsx:90
 msgid "%"
@@ -51,8 +55,8 @@ msgstr "BGM 音量"
 msgid "bgm:选择背景音乐;"
 msgstr "bgm:选择背景音乐;"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:128
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:134
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:154
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:160
 msgid "Browser"
 msgstr "Browser"
 
@@ -80,6 +84,10 @@ msgstr "changeScene:选择场景文件;"
 msgid "choose:选项:选择场景文件;"
 msgstr "choose:选项:选择场景文件;"
 
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:113
+msgid "Cline 集成指南"
+msgstr "Cline 集成指南"
+
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/AddProperty.tsx:42
 msgid "CSS 属性值"
 msgstr "CSS 属性值"
@@ -100,8 +108,8 @@ msgstr "Dry-run 预览"
 msgid "end;"
 msgstr "end;"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:113
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:119
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:139
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:145
 msgid "Exec"
 msgstr "Exec"
 
@@ -117,7 +125,7 @@ msgstr "Intro 文本"
 msgid "intro:;"
 msgstr "intro:;"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:31
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:34
 msgid "IO 错误"
 msgstr "IO 错误"
 
@@ -149,11 +157,11 @@ msgstr "playEffect:选择效果音文件;"
 msgid "playVideo:选择视频文件;"
 msgstr "playVideo:选择视频文件;"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:108
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:109
 msgid "POSIX 格式前缀匹配，大小写敏感"
 msgstr "POSIX 格式前缀匹配，大小写敏感"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:142
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:168
 msgid "Retention"
 msgstr "Retention"
 
@@ -161,7 +169,7 @@ msgstr "Retention"
 msgid "RGB电影滤镜"
 msgstr "RGB电影滤镜"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:104
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:130
 msgid "Sandbox"
 msgstr "Sandbox"
 
@@ -184,6 +192,10 @@ msgstr "setTransition:;"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:307
 msgid "Spine 动画"
 msgstr "Spine 动画"
+
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:71
+msgid "Terre 托管"
+msgstr "Terre 托管"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/index.tsx:197
 msgid "unlockBgm:;"
@@ -322,6 +334,10 @@ msgstr "主要样式"
 msgid "主页"
 msgstr "主页"
 
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:249
+msgid "于"
+msgstr "于"
+
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:78
 #: src/pages/editor/GraphicalEditor/utils/useEffectEditorConfig.ts:87
 msgid "亮度"
@@ -377,7 +393,7 @@ msgstr "使用预设的作用目标，如果设置了id则不生效"
 msgid "使用预设目标"
 msgstr "使用预设目标"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:102
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:103
 msgid "例如: game/scene"
 msgstr "例如: game/scene"
 
@@ -457,11 +473,11 @@ msgstr "停止 BGM"
 msgid "像素"
 msgstr "像素"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:185
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:211
 msgid "允许主机"
 msgstr "允许主机"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:172
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:198
 msgid "允许命令"
 msgstr "允许命令"
 
@@ -491,8 +507,8 @@ msgstr "关联立绘"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:148
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:137
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:119
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:134
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:145
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:160
 #: src/pages/editor/Topbar/tabs/Export/ExportTab.tsx:51
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:150
 #: src/pages/editor/Topbar/tabs/Settings/SettingsTab.tsx:166
@@ -536,7 +552,7 @@ msgstr "内层文本"
 msgid "内边距"
 msgstr "内边距"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:30
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:33
 msgid "内部错误"
 msgstr "内部错误"
 
@@ -544,7 +560,7 @@ msgstr "内部错误"
 msgid "最大宽度"
 msgstr "最大宽度"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:158
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:184
 msgid "最大读取"
 msgstr "最大读取"
 
@@ -565,6 +581,10 @@ msgstr "最小高度"
 msgid "最新版本"
 msgstr "最新版本"
 
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:97
+msgid "最近刷新：{0}"
+msgstr "最近刷新：{0}"
+
 #: src/pages/editor/GraphicalEditor/SentenceEditor/GetUserInput.tsx:31
 msgid "写入变量"
 msgstr "写入变量"
@@ -581,7 +601,7 @@ msgstr "写入成功"
 msgid "写入模式"
 msgstr "写入模式"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:19
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:22
 msgid "冲突"
 msgstr "冲突"
 
@@ -665,15 +685,17 @@ msgid "删除游戏"
 msgstr "删除游戏"
 
 #: src/components/Assets/Assets.tsx:476
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:138
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:97
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:104
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:139
 msgid "刷新"
 msgstr "刷新"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:104
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:130
 msgid "刷新工具"
 msgstr "刷新工具"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:102
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:128
 msgid "刷新工具列表"
 msgstr "刷新工具列表"
 
@@ -694,11 +716,11 @@ msgstr "功能区显示"
 msgid "加粗"
 msgstr "加粗"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:164
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:165
 msgid "加载快照..."
 msgstr "加载快照..."
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:53
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:61
 msgid "加载运行环境..."
 msgstr "加载运行环境..."
 
@@ -728,7 +750,7 @@ msgstr "厚度"
 #~ msgid "厚度："
 #~ msgstr "厚度："
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:18
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:21
 msgid "参数错误"
 msgstr "参数错误"
 
@@ -743,8 +765,8 @@ msgstr "发现新版本"
 #: src/components/ColorPickerPopup/ColorPickerPopup.tsx:115
 #: src/components/IconCreator/IconCreator.tsx:775
 #: src/pages/editor/ChooseFile/ChooseFile.tsx:67
-#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:91
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:241
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:117
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:242
 #: src/pages/templateEditor/TemplateEditorSidebar/TemplateEditorSidebar.tsx:171
 msgid "取消"
 msgstr "取消"
@@ -757,12 +779,16 @@ msgstr "取消固定"
 msgid "变换"
 msgstr "变换"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:263
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:264
 msgid "变更预览"
 msgstr "变更预览"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:125
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:194
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:275
+msgid "只读模式（禁用）"
+msgstr "只读模式（禁用）"
+
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:157
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:220
 msgid "可用工具"
 msgstr "可用工具"
 
@@ -785,7 +811,7 @@ msgstr "右侧立绘"
 msgid "右对齐"
 msgstr "右对齐"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:207
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:233
 msgid "名称"
 msgstr "名称"
 
@@ -810,15 +836,15 @@ msgstr "启用"
 msgid "启用视频跳过"
 msgstr "启用视频跳过"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:113
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:139
 msgid "命令"
 msgstr "命令"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:169
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:195
 msgid "命令执行"
 msgstr "命令执行"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:216
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:217
 msgid "哈希"
 msgstr "哈希"
 
@@ -901,20 +927,20 @@ msgstr "场景与分支"
 msgid "场景文件"
 msgstr "场景文件"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:128
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:154
 msgid "域名"
 msgstr "域名"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:193
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:287
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:194
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:293
 msgid "复制 ID"
 msgstr "复制 ID"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:86
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:94
 msgid "复制策略"
 msgstr "复制策略"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:79
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:87
 msgid "复制策略 JSON"
 msgstr "复制策略 JSON"
 
@@ -925,6 +951,18 @@ msgstr "外层文本"
 #: src/pages/templateEditor/TemplateGraphicalEditor/WebgalClassEditor/editorTable.ts:62
 msgid "外边距"
 msgstr "外边距"
+
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:79
+msgid "外部 Cline"
+msgstr "外部 Cline"
+
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:279
+msgid "外部 Cline 模式：这里仅预览 Diff，回滚应用被禁用以避免竞态。"
+msgstr "外部 Cline 模式：这里仅预览 Diff，回滚应用被禁用以避免竞态。"
+
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:143
+msgid "外部 MCP 模式（由 Cline 管理）"
+msgstr "外部 MCP 模式（由 Cline 管理）"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:61
 msgid "大"
@@ -1003,7 +1041,7 @@ msgid "对比度"
 msgstr "对比度"
 
 #: src/pages/editor/GraphicalEditor/SentenceEditor/Say.tsx:172
-#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:103
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:120
 msgid "对话"
 msgstr "对话"
 
@@ -1065,7 +1103,7 @@ msgstr "小头像容器"
 msgid "小头像文件"
 msgstr "小头像文件"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:174
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:175
 msgid "尝试调整路径过滤条件"
 msgstr "尝试调整路径过滤条件"
 
@@ -1089,19 +1127,19 @@ msgstr "展示小头像"
 msgid "属性"
 msgstr "属性"
 
-#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:102
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:119
 msgid "工作区"
 msgstr "工作区"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:174
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:200
 msgid "工作目录"
 msgstr "工作目录"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:75
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:83
 msgid "工具"
 msgstr "工具"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:28
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:31
 msgid "工具已禁用"
 msgstr "工具已禁用"
 
@@ -1124,9 +1162,9 @@ msgstr "左对齐"
 msgid "已创建"
 msgstr "已创建"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:79
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:193
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:287
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:87
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:194
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:293
 msgid "已复制!"
 msgstr "已复制!"
 
@@ -1136,7 +1174,7 @@ msgstr "已复制!"
 msgid "已存在文件或文件夹 {0}，请输入其他名称"
 msgstr "已存在文件或文件夹 {0}，请输入其他名称"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:45
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:49
 msgid "已连接"
 msgstr "已连接"
 
@@ -1155,7 +1193,7 @@ msgstr "帮助文档"
 msgid "常规演出"
 msgstr "常规演出"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:221
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:222
 msgid "幂等键"
 msgstr "幂等键"
 
@@ -1167,7 +1205,7 @@ msgstr "平铺"
 msgid "应用"
 msgstr "应用"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:274
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:275
 msgid "应用中..."
 msgstr "应用中..."
 
@@ -1175,7 +1213,7 @@ msgstr "应用中..."
 msgid "应用的模板"
 msgstr "应用的模板"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:131
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:132
 msgid "应用过滤"
 msgstr "应用过滤"
 
@@ -1188,7 +1226,7 @@ msgstr "应用颜色变化"
 msgid "延迟时间（秒）"
 msgstr "延迟时间（秒）"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:74
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:107
 #: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:41
 msgid "建议"
 msgstr "建议"
@@ -1197,8 +1235,8 @@ msgstr "建议"
 #: src/pages/editor/GraphicalEditor/SentenceEditor/ChangeFigure.tsx:147
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetAnimation.tsx:96
 #: src/pages/editor/GraphicalEditor/SentenceEditor/SetTransform.tsx:137
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:113
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:128
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:139
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:154
 msgid "开启"
 msgstr "开启"
 
@@ -1210,6 +1248,14 @@ msgstr "张开嘴"
 msgid "强度"
 msgstr "强度"
 
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:55
+msgid "当前为“外部 Cline”模式，Terre 不会启动 MCP。"
+msgstr "当前为“外部 Cline”模式，Terre 不会启动 MCP。"
+
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:148
+msgid "当前处于 “外部 Cline” 模式。"
+msgstr "当前处于 “外部 Cline” 模式。"
+
 #: src/pages/dashboard/About.tsx:41
 #: src/pages/dashboard/DashBoard.tsx:156
 msgid "当前版本"
@@ -1220,11 +1266,11 @@ msgid "德语"
 msgstr "德语"
 
 #: src/pages/editor/MainArea/AgentPanel/components/AgentResults.tsx:40
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:247
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:248
 msgid "快照 ID"
 msgstr "快照 ID"
 
-#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:104
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:121
 msgid "快照时间线"
 msgstr "快照时间线"
 
@@ -1232,11 +1278,11 @@ msgstr "快照时间线"
 msgid "忽略此版本"
 msgstr "忽略此版本"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:282
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:288
 msgid "恢复成功！"
 msgstr "恢复成功！"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:235
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:236
 msgid "恢复预览"
 msgstr "恢复预览"
 
@@ -1244,7 +1290,7 @@ msgstr "恢复预览"
 msgid "我确定要删除游戏"
 msgstr "我确定要删除游戏"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:187
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:213
 msgid "截图目录"
 msgstr "截图目录"
 
@@ -1264,7 +1310,7 @@ msgstr "手动输入 ID"
 msgid "打开效果编辑器"
 msgstr "打开效果编辑器"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:175
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:176
 msgid "执行写入操作后会自动创建快照"
 msgstr "执行写入操作后会自动创建快照"
 
@@ -1370,16 +1416,16 @@ msgstr "播放效果音"
 msgid "播放视频"
 msgstr "播放视频"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:42
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:45
 msgid "操作被禁止。请检查 policies.json 中的相关权限配置。"
 msgstr "操作被禁止。请检查 policies.json 中的相关权限配置。"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:40
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:43
 msgid "操作被策略禁止。请检查 policies.json 中的 sandbox.forbiddenDirs 或相关配置。"
 msgstr "操作被策略禁止。请检查 policies.json 中的 sandbox.forbiddenDirs 或相关配置。"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:65
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:95
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:88
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:121
 msgid "收起"
 msgstr "收起"
 
@@ -1430,7 +1476,7 @@ msgstr "效果音 音量"
 msgid "效果音文件"
 msgstr "效果音文件"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:112
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:113
 msgid "数量限制"
 msgstr "数量限制"
 
@@ -1450,19 +1496,19 @@ msgstr "文件已被修改，请重新执行 Dry-run 并检查差异"
 msgid "文件已读取"
 msgstr "文件已读取"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:17
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:20
 msgid "文件未找到"
 msgstr "文件未找到"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:43
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:46
 msgid "文件超过大小限制。可在 policies.json 中调整 sandbox.maxReadBytes 参数（当前限制可在运行环境中查看）。"
 msgstr "文件超过大小限制。可在 policies.json 中调整 sandbox.maxReadBytes 参数（当前限制可在运行环境中查看）。"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:250
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:251
 msgid "文件路径"
 msgstr "文件路径"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:24
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:27
 msgid "文件过大"
 msgstr "文件过大"
 
@@ -1525,7 +1571,7 @@ msgstr "文本阴影"
 msgid "文档"
 msgstr "文档"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:110
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:136
 msgid "断开"
 msgstr "断开"
 
@@ -1547,7 +1593,7 @@ msgstr "新建模板"
 msgid "新建游戏"
 msgstr "新建游戏"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:285
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:291
 msgid "新快照 ID"
 msgstr "新快照 ID"
 
@@ -1677,11 +1723,11 @@ msgstr "普通对话"
 msgid "智能助手"
 msgstr "智能助手"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:171
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:172
 msgid "暂无快照"
 msgstr "暂无快照"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:205
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:231
 msgid "服务器信息"
 msgstr "服务器信息"
 
@@ -1701,7 +1747,7 @@ msgstr "未识别"
 msgid "未识别的指令"
 msgstr "未识别的指令"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:45
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:49
 msgid "未连接"
 msgstr "未连接"
 
@@ -1756,7 +1802,7 @@ msgstr "标题背景音乐"
 msgid "校验"
 msgstr "校验"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:27
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:30
 #: src/pages/editor/MainArea/AgentPanel/components/ValidationResults.tsx:26
 msgid "校验失败"
 msgstr "校验失败"
@@ -1802,11 +1848,11 @@ msgstr "模糊"
 msgid "櫻花"
 msgstr "櫻花"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:256
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:257
 msgid "正在生成 Diff..."
 msgstr "正在生成 Diff..."
 
-#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:76
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:91
 msgid "正在连接..."
 msgstr "正在连接..."
 
@@ -1826,7 +1872,7 @@ msgstr "此指令将结束游戏"
 msgid "永不换行"
 msgstr "永不换行"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:155
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:181
 msgid "沙箱配置"
 msgstr "沙箱配置"
 
@@ -1854,7 +1900,7 @@ msgstr "注释"
 msgid "注释仅在编辑时可见，游戏中不会执行"
 msgstr "注释仅在编辑时可见，游戏中不会执行"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:182
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:208
 msgid "浏览器"
 msgstr "浏览器"
 
@@ -1967,7 +2013,7 @@ msgstr "源代码"
 msgid "滤镜"
 msgstr "滤镜"
 
-#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:125
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:144
 msgid "点击上方\"连接\"按钮开始"
 msgstr "点击上方\"连接\"按钮开始"
 
@@ -1983,7 +2029,7 @@ msgstr "点击或按退格键以删除旧的分隔符，输入新的分隔符后
 msgid "点状电影滤镜"
 msgstr "点状电影滤镜"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:208
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:234
 msgid "版本"
 msgstr "版本"
 
@@ -2032,11 +2078,11 @@ msgstr "确定"
 msgid "确定要删除 \"{templateName}\" 模板吗？"
 msgstr "确定要删除 \"{templateName}\" 模板吗？"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:85
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:111
 msgid "确认"
 msgstr "确认"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:274
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:275
 msgid "确认恢复"
 msgstr "确认恢复"
 
@@ -2064,12 +2110,12 @@ msgstr "视频文件"
 msgid "视频选项"
 msgstr "视频选项"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:105
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:161
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:131
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:187
 msgid "禁止目录"
 msgstr "禁止目录"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:22
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:25
 msgid "禁止访问"
 msgstr "禁止访问"
 
@@ -2115,7 +2161,15 @@ msgstr "立绘插图的ID"
 msgid "立绘文件"
 msgstr "立绘文件"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:23
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:240
+msgid "策略与锁"
+msgstr "策略与锁"
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:243
+msgid "策略文件"
+msgstr "策略文件"
+
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:26
 msgid "策略违规"
 msgstr "策略违规"
 
@@ -2209,11 +2263,11 @@ msgid "缓动类型"
 msgstr "缓动类型"
 
 #: src/pages/editor/MainArea/AgentPanel/components/AgentResults.tsx:26
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:157
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:183
 msgid "编码"
 msgstr "编码"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:25
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:28
 msgid "编码错误"
 msgstr "编码错误"
 
@@ -2413,7 +2467,7 @@ msgstr "角色名文本框背景"
 msgid "角落头像"
 msgstr "角落头像"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:26
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:29
 msgid "解析失败"
 msgstr "解析失败"
 
@@ -2471,7 +2525,7 @@ msgstr "设置自定义级联选择器分隔符（输入后按回车键确认）
 #~ msgid "设置转场效果"
 #~ msgstr "设置转场效果"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:39
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:42
 msgid "该功能未启用。请在 policies.json 中设置 \"enabled\": true 以启用此功能。"
 msgstr "该功能未启用。请在 policies.json 中设置 \"enabled\": true 以启用此功能。"
 
@@ -2483,12 +2537,12 @@ msgstr "该指令没有被识别，请打开脚本编辑模式以手动编辑"
 msgid "该文件类型不支持预览"
 msgstr "该文件类型不支持预览"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:65
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:95
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:88
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:121
 msgid "详情"
 msgstr "详情"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:79
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:117
 msgid "详细信息"
 msgstr "详细信息"
 
@@ -2513,9 +2567,13 @@ msgstr "语音"
 msgid "请先执行 Dry-run"
 msgstr "请先执行 Dry-run"
 
-#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:124
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:143
 msgid "请先连接到项目"
 msgstr "请先连接到项目"
+
+#: src/pages/editor/MainArea/AgentPanel/AgentPanel.tsx:149
+msgid "请在 Cline 中启动 MCP；此处仅做观测与只读操作（连接按钮已隐藏）。"
+msgstr "请在 Cline 中启动 MCP；此处仅做观测与只读操作（连接按钮已隐藏）。"
 
 #: src/pages/editor/MainArea/AgentPanel/components/AgentActions.tsx:37
 msgid "请指定文件路径"
@@ -2593,9 +2651,9 @@ msgstr "起点回弹"
 msgid "起点弹跳"
 msgstr "起点弹跳"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:20
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:171
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:184
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:23
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:197
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:210
 msgid "超时"
 msgstr "超时"
 
@@ -2604,19 +2662,19 @@ msgstr "超时"
 msgid "跨语句动画"
 msgstr "跨语句动画"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:212
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:213
 msgid "路径"
 msgstr "路径"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:21
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:24
 msgid "路径禁止"
 msgstr "路径禁止"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:41
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:44
 msgid "路径被策略禁止访问。请检查 policies.json 中的 sandbox.forbiddenDirs 配置。"
 msgstr "路径被策略禁止访问。请检查 policies.json 中的 sandbox.forbiddenDirs 配置。"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:100
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:101
 msgid "路径过滤"
 msgstr "路径过滤"
 
@@ -2634,7 +2692,7 @@ msgstr "输入或编辑场景内容..."
 msgid "输入目标 ID"
 msgstr "输入目标 ID"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:71
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:97
 msgid "输入项目根路径"
 msgstr "输入项目根路径"
 
@@ -2655,7 +2713,11 @@ msgstr "过滤文件"
 msgid "运行平台"
 msgstr "运行平台"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:73
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:64
+msgid "运行模式"
+msgstr "运行模式"
+
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:81
 msgid "运行环境"
 msgstr "运行环境"
 
@@ -2671,7 +2733,7 @@ msgstr "返回"
 msgid "进出场动画"
 msgstr "进出场动画"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:66
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:92
 msgid "连接"
 msgstr "连接"
 
@@ -2856,9 +2918,14 @@ msgstr "重命名模板目录"
 msgid "重命名游戏目录"
 msgstr "重命名游戏目录"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:155
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:156
 msgid "重新 Dry-run"
 msgstr "重新 Dry-run"
+
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:98
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:110
+msgid "重试"
+msgstr "重试"
 
 #: src/pages/editor/Topbar/tabs/AddSentence/AddSentenceTab.tsx:63
 msgid "鉴赏"
@@ -2880,7 +2947,11 @@ msgstr "鉴赏资源文件"
 msgid "鉴赏音乐"
 msgstr "鉴赏音乐"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:33
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:247
+msgid "锁"
+msgstr "锁"
+
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:36
 msgid "错误"
 msgstr "错误"
 
@@ -2945,11 +3016,11 @@ msgstr "音乐"
 msgid "项目主页"
 msgstr "项目主页"
 
-#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:51
+#: src/pages/editor/MainArea/AgentPanel/components/AgentHeader.tsx:55
 msgid "项目根"
 msgstr "项目根"
 
-#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:150
+#: src/pages/editor/MainArea/AgentPanel/components/RuntimeInfo.tsx:176
 msgid "项目根目录"
 msgstr "项目根目录"
 
@@ -2969,7 +3040,7 @@ msgstr "预览"
 msgid "预览图标"
 msgstr "预览图标"
 
-#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:29
+#: src/pages/editor/MainArea/AgentPanel/components/ErrorBanner.tsx:32
 msgid "预览失败"
 msgstr "预览失败"
 
@@ -3012,7 +3083,7 @@ msgstr "高斯模糊"
 msgid "默认"
 msgstr "默认"
 
-#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:122
+#: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:123
 msgid "默认 50，最大 1000"
 msgstr "默认 50，最大 1000"
 

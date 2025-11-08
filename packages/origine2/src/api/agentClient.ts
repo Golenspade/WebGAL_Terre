@@ -302,6 +302,19 @@ export class AgentClient {
     return res.json();
   }
 
+
+  /**
+   * 对话（SSE 流）
+   */
+  openChatStream(params: { sessionId?: string; message: string; context?: { scenePath?: string } }): EventSource {
+    const q = new URLSearchParams();
+    if (params.sessionId) q.set('sessionId', params.sessionId);
+    q.set('message', params.message);
+    if (params.context?.scenePath) q.set('scenePath', params.context.scenePath);
+    const url = `/api/agent/chat/stream?${q.toString()}`;
+    return new EventSource(url);
+  }
+
 }
 
 /**

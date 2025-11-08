@@ -5,7 +5,10 @@ import {
   Body,
   HttpException,
   HttpStatus,
+  Res,
+  Query,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { ApiTags, ApiOperation, ApiResponse, ApiBody } from '@nestjs/swagger';
 import { AgentMcpService } from './agent-mcp.service';
 import { CallToolDto, AgentStatusDto, SetProjectRootDto, ToolDto, ChatRequestDto, ChatResponseDto } from './agent.dto';
@@ -123,6 +126,49 @@ export class AgentController {
       throw new HttpException(message, status);
     }
   }
+
+  @Get('chat/stream')
+  @ApiOperation({ summary: 'Chat with LLM (SSE: assistant text + tool steps)' })
+  @ApiResponse({ status: 200, description: 'SSE event stream' })
+  async chatStream(
+    @Res() res: Response,
+    @Query('sessionId') sessionId?: string,
+    @Query('message') message?: string,
+    @Query('scenePath') scenePath?: string,
+  ): Promise<void> {
+    if (!message) {
+      throw new HttpException('message is required', HttpStatus.BAD_REQUEST);
+    }
+
+    // SSE headers
+    res.setHeader('Content-Type', 'text/event-stream');
+    res.setHeader('Cache-Control', 'no-cache, no-transform');
+    res.setHeader('Connection', 'keep-alive');
+    (res as any).flushHeaders?.();
+
+    const emit = (event: string, data: any) => {
+      res.write(`event: ${event}\n`);
+      res.write(`data: ${JSON.stringify(data)}\n\n`);
+    };
+
+    try {
+      await this.chatSvc.chatStream(
+        {
+          sessionId: sessionId || undefined,
+          message,
+          context: scenePath ? { scenePath } : undefined,
+        } as any,
+        emit,
+      );
+    } catch (error: any) {
+      const msg = error?.message || 'Chat stream failed';
+      emit('error', { message: msg });
+    } finally {
+      emit('done', {});
+      res.end();
+    }
+  }
+
 
   /**
    * Map CONTRACTS.md error codes to HTTP status codes

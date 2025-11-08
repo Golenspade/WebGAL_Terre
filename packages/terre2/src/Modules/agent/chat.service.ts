@@ -174,6 +174,111 @@ export class ChatService {
 
     return { sessionId: id, role: 'assistant', content: assistant.content, steps, usage: first.usage };
   }
+
+  async chatStream(dto: ChatRequestDto, emit: (event: string, data: any) => void): Promise<void> {
+    const { id, history } = this.getOrCreateSession(dto.sessionId);
+
+    // 装配系统提示（Prompt Pack）
+    try {
+      const sys = await this.getSystemPrompt();
+      if (history.length > 0 && history[0].role === 'system') {
+        history[0].content = sys;
+      } else {
+        history.unshift({ role: 'system', content: sys });
+      }
+    } catch {}
+
+    emit('meta', { sessionId: id });
+
+    const userMsg: ChatMessage = {
+      role: 'user',
+      content: dto.context?.scenePath ? `[scene=${dto.context.scenePath}]\n${dto.message}` : dto.message,
+    };
+    history.push(userMsg);
+
+    const MAX_HISTORY = 12;
+    const messages = history.slice(-MAX_HISTORY);
+
+    // 列工具（若 MCP 未运行，则以无工具模式退化）
+    let openAiTools: OpenAITool[] | undefined;
+    try {
+      const status = this.agentMcp.getStatus();
+      if (status.running) {
+        const mcpTools = await this.agentMcp.listTools();
+        openAiTools = this.mapMcpToolsToOpenAI(mcpTools);
+      }
+    } catch {}
+
+    const first = await this.llm.chat(messages, { tools: openAiTools });
+    const toolCalls: ToolCall[] | undefined = first.toolCalls;
+
+    // 无工具调用：直接返回文本
+    if (!toolCalls || toolCalls.length === 0) {
+      const content = first.content || '';
+      if (content) emit('assistant', { content });
+      const assistant: ChatMessage = { role: 'assistant', content };
+      history.push(assistant);
+      emit('final', { content, usage: first.usage });
+      return;
+    }
+
+    // 有工具调用：先把模型的说明话术发出去
+    if (first.content) {
+      emit('assistant', { content: first.content });
+    }
+
+    const MAX_TOOL_STEPS = Number.parseInt(process.env.AGENT_MAX_TOOL_STEPS || '12', 10);
+    const limitedToolCalls = toolCalls.slice(0, Math.max(0, MAX_TOOL_STEPS));
+
+    const steps: ChatStepDto[] = [];
+    const stepSummaries: string[] = [];
+
+    for (const call of limitedToolCalls) {
+      const name = call.function?.name as string;
+      let args: any = {};
+      try { args = call.function?.arguments ? JSON.parse(call.function.arguments) : {}; } catch {}
+
+      if (!READ_ONLY_TOOLS.has(name)) {
+        const summary = '写入/危险操作需要确认，已阻止执行';
+        const step: ChatStepDto = { name, args, blocked: true, summary };
+        steps.push(step);
+        stepSummaries.push(`- [未执行] ${name}(${safePreviewArgs(args)}): ${summary}`);
+        emit('step', step);
+        continue;
+      }
+
+      try {
+        const result = await this.agentMcp.callTool(name, args);
+        const summary = safePreviewResult(result);
+        const step: ChatStepDto = { name, args, summary };
+        steps.push(step);
+        stepSummaries.push(`- ${name}(${safePreviewArgs(args)}): ${summary}`);
+        emit('step', step);
+      } catch (err: any) {
+        const summary = err?.message || '执行失败';
+        const step: ChatStepDto = {
+          name,
+          args,
+          summary,
+          error: { message: err?.message || '执行失败', code: err?.code, hint: err?.hint, details: err?.details },
+        };
+        steps.push(step);
+        stepSummaries.push(`- [失败] ${name}(${safePreviewArgs(args)}): ${summary}`);
+        emit('step', step);
+      }
+    }
+
+    if (limitedToolCalls.length < (toolCalls?.length || 0)) {
+      stepSummaries.push(`- [提示] 已达到单轮工具步数上限 ${MAX_TOOL_STEPS}，剩余步骤未执行`);
+    }
+    const summary = `我已按你的请求尝试调用工具：\n${stepSummaries.join('\n')}\n\n如需对文件进行修改，我可以先准备 diff 供你确认，再执行写入。`;
+
+    const assistant: ChatMessage = { role: 'assistant', content: summary };
+    history.push(assistant);
+
+    emit('final', { content: assistant.content, steps, usage: first.usage });
+  }
+
 }
 
 // 辅助：参数/结果摘要，避免过长

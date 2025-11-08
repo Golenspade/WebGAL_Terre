@@ -59,16 +59,101 @@ export default function ChatPanel() {
       setMessages((m) => [...m, { role: 'user', content: text }]);
       setInput('');
     }
+
+    // 优先使用 SSE 流；失败时回退为 POST
     try {
-      const res = await agentClient.chat({ sessionId: sid, message: text });
-      setSessionId(res.sessionId);
-      setMessages((m) => [...m, { role: 'assistant', content: res.content, steps: res.steps, stepsCollapsed: false }]);
-      setLastFailedRequest(null);
+      const es = agentClient.openChatStream({ sessionId: sid, message: text });
+      let assistantIndex = -1;
+      let finalized = false;
+      let usedFallback = false;
+
+      // 占位的 assistant 条目
+      setMessages((prev) => {
+        const next = [...prev, { role: 'assistant', content: '', steps: [], stepsCollapsed: false } as Msg];
+        assistantIndex = next.length - 1;
+        return next;
+      });
+
+      es.addEventListener('meta', (ev) => {
+        try { const data = JSON.parse((ev as MessageEvent).data); if (data?.sessionId) setSessionId(data.sessionId); } catch {}
+      });
+      es.addEventListener('assistant', (ev) => {
+        try {
+          const data = JSON.parse((ev as MessageEvent).data);
+          setMessages((prev) => {
+            const next = [...prev];
+            const m = next[assistantIndex];
+            if (m) next[assistantIndex] = { ...m, content: (m.content || '') + (data?.content || '') };
+            return next;
+          });
+        } catch {}
+      });
+      es.addEventListener('step', (ev) => {
+        try {
+          const step = JSON.parse((ev as MessageEvent).data) as Step;
+          setMessages((prev) => {
+            const next = [...prev];
+            const m = next[assistantIndex];
+            if (m) next[assistantIndex] = { ...m, steps: [...(m.steps || []), step], stepsCollapsed: false };
+            return next;
+          });
+        } catch {}
+      });
+      es.addEventListener('final', (ev) => {
+        try {
+          const data = JSON.parse((ev as MessageEvent).data);
+          setMessages((prev) => {
+            const next = [...prev];
+            const m = next[assistantIndex];
+            if (m) next[assistantIndex] = { ...m, content: data?.content ?? m.content, steps: data?.steps ?? m.steps, stepsCollapsed: false };
+            return next;
+          });
+          setLastFailedRequest(null);
+        } catch {}
+        finalized = true;
+        setSending(false);
+        es.close();
+      });
+      es.addEventListener('error', async () => {
+        if (finalized || usedFallback) return;
+        usedFallback = true;
+        es.close();
+        // 回退：直接调用 POST 获取最终结果
+        try {
+          const res = await agentClient.chat({ sessionId: sid, message: text });
+          setSessionId(res.sessionId);
+          setMessages((prev) => {
+            const next = [...prev];
+            const m = next[assistantIndex];
+            if (m) next[assistantIndex] = { ...m, content: res.content, steps: res.steps, stepsCollapsed: false };
+            return next;
+          });
+          setLastFailedRequest(null);
+        } catch (e: any) {
+          setLastFailedRequest({ sessionId: sid, message: text });
+          setMessages((prev) => {
+            const next = [...prev];
+            const m = next[assistantIndex];
+            if (m) next[assistantIndex] = { ...m, content: `对话失败：${e?.message || '未知错误'}`, failed: true };
+            return next;
+          });
+        } finally {
+          setSending(false);
+        }
+      });
     } catch (e: any) {
-      setLastFailedRequest({ sessionId: sid, message: text });
-      setMessages((m) => [...m, { role: 'assistant', content: `对话失败：${e?.message || '未知错误'}`, failed: true }]);
-    } finally {
-      setSending(false);
+      // 极早期失败的同步异常：直接回退 POST
+      try {
+        const res = await agentClient.chat({ sessionId: sid, message: text });
+        setSessionId(res.sessionId);
+        setMessages((m) => [...m, { role: 'assistant', content: res.content, steps: res.steps, stepsCollapsed: false }]);
+        setLastFailedRequest(null);
+      } catch (err: any) {
+        setLastFailedRequest({ sessionId: sid, message: text });
+        setMessages((m) => [...m, { role: 'assistant', content: `对话失败：${err?.message || '未知错误'}`, failed: true }]);
+      } finally {
+        setSending(false);
+      }
     }
   };
 
