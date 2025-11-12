@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Agent Chat Demo</title>
+    <style>
+      :root { --bg:#0f1115; --fg:#e6e6e6; --muted:#9aa4ad; --green:#1a7f37; --red:#b00020; --blue:#2f81f7; }
+      body { margin:0; background:var(--bg); color:var(--fg); font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; }
+      .toolbar { padding:12px; display:flex; gap:8px; align-items:center; border-bottom:1px solid #222; position:sticky; top:0; background:linear-gradient(180deg, rgba(15,17,21,0.98), rgba(15,17,21,0.92)); backdrop-filter: blur(4px); }
+      input, button { font-size:14px; }
+      input { background:#0b0d10; color:var(--fg); border:1px solid #222; border-radius:6px; padding:8px 10px; }
+      button { background:#1f6feb; color:#fff; border:0; border-radius:6px; padding:8px 12px; cursor:pointer; }
+      button.secondary { background:#2d333b; }
+      .container { max-width:900px; margin:0 auto; padding: 12px; }
+      .bubble { border:1px solid #222; border-radius:10px; padding:10px 12px; margin:12px 0; line-height:1.5; background:#0b0d10; }
+      .bubble.assistant { border-color:#243b6b; box-shadow: 0 0 0 1px rgba(47,129,247,0.15) inset; }
+      .bubble.step { border-color:#284a2d; }
+      .header { display:flex; align-items:center; gap:8px; margin-bottom:6px; font-size:13px; color:var(--muted); }
+      .tool { color:#a6e3a1; font-weight:600; }
+      .args, .result { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:12px; white-space:pre-wrap; background:#0a0c0f; border:1px solid #1b1f23; border-radius:6px; padding:8px; overflow:auto; }
+      .row { display:flex; gap:8px; }
+      .badge { font-size:11px; padding:2px 6px; border-radius:999px; border:1px solid #333; color:#ddd; }
+      .blocked { border-color:#555; color:#bbb; }
+      .ok { border-color:#2e8540; color:#b5f7c1; }
+      .error { border-color:#8b1a2b; color:#ffbcc6; }
+      details { margin-top:6px; }
+    </style>
+  </head>
+  <body>
+    <div class="toolbar">
+      <input id="scene" placeholder="scene path (optional), e.g. game/scene/start.txt" size="36" />
+      <input id="msg" placeholder="Type a message…" size="60" />
+      <button id="send">Send</button>
+      <button id="stop" class="secondary">Stop</button>
+    </div>
+    <div class="container">
+      <div id="log"></div>
+    </div>
+    <script>
+      const $ = (id) => document.getElementById(id);
+      let es = null;
+
+      function addAssistant(text) {
+        const div = document.createElement('div');
+        div.className = 'bubble assistant';
+        div.innerHTML = `<div class="header">Assistant</div><div>${escapeHtml(text).replace(/\n/g,'<br/>')}</div>`;
+        $('log').appendChild(div); scrollToEnd();
+      }
+
+      function addStep(step) {
+        const div = document.createElement('div');
+        div.className = 'bubble step';
+        const status = step.error ? `<span class="badge error">error</span>` : (step.blocked ? `<span class="badge blocked">blocked</span>` : `<span class="badge ok">ok</span>`);
+        const dur = step.durationMs != null ? ` • ${step.durationMs}ms` : '';
+        div.innerHTML = `
+          <div class="header"><span class="tool">${escapeHtml(step.name)}</span>${dur} ${status}</div>
+          <div class="row">
+            <div style="flex:1">
+              <div style="font-size:12px;color:#9aa4ad;margin-bottom:4px">args</div>
+              <div class="args">${codeJson(step.args)}</div>
+            </div>
+            <div style="flex:1">
+              <div style="font-size:12px;color:#9aa4ad;margin-bottom:4px">summary</div>
+              <div class="args">${escapeHtml(step.summary||'')}</div>
+            </div>
+          </div>
+          ${step.result ? `<details><summary style="cursor:pointer">view raw result</summary><div class="result">${codeJson(step.result)}</div></details>` : ''}
+          ${step.error ? `<details open><summary style="cursor:pointer">error</summary><div class="result">${codeJson(step.error)}</div></details>` : ''}
+        `;
+        $('log').appendChild(div); scrollToEnd();
+      }
+
+      function codeJson(obj) {
+        try { return escapeHtml(JSON.stringify(obj, null, 2)); } catch { return '[unserializable]'; }
+      }
+      function escapeHtml(s) {
+        return String(s).replace(/[&<>\"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+      }
+      function scrollToEnd(){ requestAnimationFrame(()=>window.scrollTo({ top: document.body.scrollHeight, behavior:'smooth'})); }
+
+      function startStream(message, scenePath){
+        stopStream();
+        const params = new URLSearchParams();
+        params.set('message', message);
+        if (scenePath) params.set('scenePath', scenePath);
+        es = new EventSource(`/api/agent/chat/stream?${params.toString()}`);
+        es.addEventListener('assistant', (e)=>{ try{ const d=JSON.parse(e.data); addAssistant(d.content||''); }catch{}});
+        es.addEventListener('step', (e)=>{ try{ const d=JSON.parse(e.data); addStep(d); }catch{}});
+        es.addEventListener('error', (e)=>{ addAssistant('Error: '+(e.data||'unknown')); });
+        es.addEventListener('final', (e)=>{ /* optionally show final summary */ });
+        es.addEventListener('done', ()=>{ stopStream(); });
+      }
+      function stopStream(){ if (es) { es.close(); es=null; } }
+
+      $('send').onclick = ()=>{
+        const msg = $('msg').value.trim();
+        const scene = $('scene').value.trim();
+        if (!msg) return;
+        startStream(msg, scene || undefined);
+      };
+      $('stop').onclick = stopStream;
+    </script>
+  </body>
+  </html>
+

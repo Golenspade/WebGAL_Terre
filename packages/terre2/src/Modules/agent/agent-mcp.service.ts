@@ -38,7 +38,8 @@ export class AgentMcpService implements OnModuleDestroy {
     reject: (error: any) => void;
     timeout: NodeJS.Timeout;
   }>();
-  private lineBuffer = '';
+  // Raw buffer for LSP-style (Content-Length) framing
+  private stdoutBuffer: Buffer = Buffer.alloc(0);
   private tools: McpTool[] = [];
   private initialized = false;
 
@@ -93,8 +94,8 @@ export class AgentMcpService implements OnModuleDestroy {
     });
 
     this.mcpProcess.stdout?.on('data', (chunk: Buffer) => {
-      this.lineBuffer += chunk.toString('utf8');
-      this.processLines();
+      this.stdoutBuffer = Buffer.concat([this.stdoutBuffer, chunk]);
+      this.processFrames();
     });
 
     this.mcpProcess.stderr?.on('data', (chunk) => {
@@ -232,23 +233,34 @@ export class AgentMcpService implements OnModuleDestroy {
    * - 保留未完成的行在 buffer 中
    * - 跳过空行
    */
-  private processLines(): void {
-    // 按 \r?\n 分割，兼容 Windows/Unix 换行符
-    const lines = this.lineBuffer.split(/\r?\n/);
-    // Keep the last incomplete line in the buffer
-    this.lineBuffer = lines.pop() || '';
+  /**
+   * 解析 MCP 标准：一行一条 JSON（以换行分隔）
+   * - 支持 \r\n 与 \n
+   * - 跳过空行
+   * - 保留未完成的行在 buffer 中
+   */
+  private processFrames(): void {
+    while (true) {
+      const nlIndex = this.stdoutBuffer.indexOf('\n');
+      if (nlIndex === -1) return; // 需要更多数据
 
-    for (const line of lines) {
+      // 提取一行（去掉尾部换行与可选的回车）
+      let line = this.stdoutBuffer.slice(0, nlIndex).toString('utf8');
+      this.stdoutBuffer = this.stdoutBuffer.slice(nlIndex + 1);
+      if (line.endsWith('\r')) line = line.slice(0, -1);
+
       const trimmed = line.trim();
       if (!trimmed) {
+        // 空行，继续
         continue;
       }
 
       try {
         const message = JSON.parse(trimmed) as JsonRpcResponse;
         this.handleResponse(message);
-      } catch (error) {
-        this.logger.error(`Failed to parse JSON-RPC message: ${trimmed}`);
+      } catch (err) {
+        this.logger.error(`Failed to parse JSON line: ${trimmed.slice(0, 200)}...`);
+        // 继续读取后续行，避免阻塞
       }
     }
   }
@@ -273,7 +285,7 @@ export class AgentMcpService implements OnModuleDestroy {
   private cleanup(): void {
     this.mcpProcess = null;
     this.projectRoot = null;
-    this.lineBuffer = '';
+    this.stdoutBuffer = Buffer.alloc(0);
     this.tools = [];
     this.initialized = false;
 
@@ -363,9 +375,9 @@ export class AgentMcpService implements OnModuleDestroy {
         timeout
       });
 
-      // 发送换行分隔的 JSON（MCP stdio 协议）
-      const json = JSON.stringify(request);
-      const canWrite = this.mcpProcess!.stdin?.write(json + '\n');
+      // 发送 MCP 标准帧：JSON 一行一条（以\n分隔）
+      const line = JSON.stringify(request) + '\n';
+      const canWrite = this.mcpProcess!.stdin?.write(line);
 
       // 处理 backpressure
       if (canWrite === false) {
@@ -428,4 +440,3 @@ export class AgentMcpService implements OnModuleDestroy {
     return { command: 'mcp-webgal', args: [] };
   }
 }
-

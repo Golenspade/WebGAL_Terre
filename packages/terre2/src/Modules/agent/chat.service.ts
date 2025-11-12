@@ -71,13 +71,31 @@ export class ChatService {
       };
       const system = await readFiles(registry.system);
       const facts = await readFiles(registry.facts);
-      const assembled = [system, facts].filter(Boolean).join('\n\n');
+      const examples = await readFiles(registry.examples);
+      const assembled = [system, facts, examples].filter(Boolean).join('\n\n');
       this.systemPromptCache = assembled || '你是 WebGAL 脚本编辑助手。';
       return this.systemPromptCache;
     } catch {
       this.systemPromptCache = '你是 WebGAL 脚本编辑助手。';
       return this.systemPromptCache;
     }
+  }
+
+  /**
+   * 对常见目录型工具做路径兜底：当 path 为空/为 '.' 时默认指向 'game' 目录，
+   * 让用户无需关心项目层级即可直接列出资源。
+   */
+  private normalizeToolArgs(name: string, args: any): any {
+    try {
+      const needsGameDefault = name === 'list_files' || name === 'search_files' || name === 'list_snapshots';
+      if (needsGameDefault) {
+        const p = args?.path;
+        if (p === undefined || p === null || p === '.' || p === './') {
+          return { ...(args || {}), path: 'game' };
+        }
+      }
+    } catch {}
+    return args;
   }
 
   async chat(dto: ChatRequestDto): Promise<ChatResponseDto> {
@@ -146,9 +164,12 @@ export class ChatService {
       }
 
       try {
+        args = this.normalizeToolArgs(name, args);
+        const started = Date.now();
         const result = await this.agentMcp.callTool(name, args);
+        const durationMs = Date.now() - started;
         const summary = safePreviewResult(result);
-        steps.push({ name, args, summary });
+        steps.push({ name, args, summary, result, durationMs });
         stepSummaries.push(`- ${name}(${safePreviewArgs(args)}): ${summary}`);
       } catch (err: any) {
         const summary = err?.message || '执行失败';
@@ -248,9 +269,12 @@ export class ChatService {
       }
 
       try {
+        args = this.normalizeToolArgs(name, args);
+        const started = Date.now();
         const result = await this.agentMcp.callTool(name, args);
+        const durationMs = Date.now() - started;
         const summary = safePreviewResult(result);
-        const step: ChatStepDto = { name, args, summary };
+        const step: ChatStepDto = { name, args, summary, result, durationMs };
         steps.push(step);
         stepSummaries.push(`- ${name}(${safePreviewArgs(args)}): ${summary}`);
         emit('step', step);
@@ -308,4 +332,3 @@ function safePreviewResult(result: any): string {
     return '[unserializable]';
   }
 }
-

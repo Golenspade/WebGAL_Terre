@@ -14,3 +14,5 @@ packages/origine2/src/locales/ja.ts
 packages/origine2/src/locales/zhCn.ts
 
 .env*
+**/.webgal_agent/
+**/.webgal_agent/**

@@ -6,7 +6,7 @@ import ChatWriteConfirm from './ChatWriteConfirm';
 import ChatReplaceConfirm from './ChatReplaceConfirm';
 import ErrorBanner from './ErrorBanner';
 
-interface Step { name: string; args?: any; blocked?: boolean; summary?: string; error?: { code?: string; message: string; hint?: string; details?: any } }
+interface Step { name: string; args?: any; blocked?: boolean; summary?: string; result?: any; durationMs?: number; error?: { code?: string; message: string; hint?: string; details?: any } }
 interface Msg { role: 'user' | 'assistant'; content: string; steps?: Step[]; failed?: boolean; stepsCollapsed?: boolean }
 
 export default function ChatPanel() {
@@ -215,23 +215,41 @@ export default function ChatPanel() {
                   {!m.stepsCollapsed && (
                     <>
                       {m.steps.map((s, idx) => (
-                        <div key={idx} style={{ display: 'flex', alignItems: 'flex-start', gap: 6, fontSize: 12, color: s.error ? '#b42318' : s.blocked ? '#8a2d0a' : '#333', padding: '2px 0' }}>
-                          <span aria-hidden>
-                            {s.error ? <DismissCircle16Filled color="#b42318" /> : s.blocked ? <Warning16Filled color="#8a2d0a" /> : <CheckmarkCircle16Filled color="#1a7f37" />}
-                          </span>
-                          <span style={{ lineHeight: 1.4 }}>
-                            {s.name}({shortArgs(s.args)}): {s.blocked ? '已阻止执行（需确认）' : s.summary || '完成'}
-                            {s.error ? `（错误：${s.error.message}${s.error.hint ? '；提示：' + s.error.hint : ''}）` : ''}
-                          </span>
-                          {s.blocked && s.name === 'write_to_file' && (
-                            <Button size="small" appearance="subtle" onClick={() => openWriteConfirm(s.args)} style={{ marginLeft: 6 }}>
-                              预览变更
-                            </Button>
+                        <div key={idx} style={{ margin: '6px 0', padding: '6px 8px', border: '1px solid #eee', borderRadius: 6, background: s.error ? '#fff5f5' : s.blocked ? '#fff8e6' : '#f9fbff' }}>
+                          <div style={{ display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, color: s.error ? '#b42318' : s.blocked ? '#8a2d0a' : '#333' }}>
+                            <span aria-hidden>
+                              {s.error ? <DismissCircle16Filled color="#b42318" /> : s.blocked ? <Warning16Filled color="#8a2d0a" /> : <CheckmarkCircle16Filled color="#1a7f37" />}
+                            </span>
+                            <span style={{ lineHeight: 1.4 }}>
+                              {s.name}({shortArgs(s.args)}){typeof s.durationMs === 'number' ? ` · ${s.durationMs}ms` : ''}：{s.blocked ? '已阻止执行（需确认）' : s.summary || '完成'}
+                              {s.error ? `（错误：${s.error.message}${s.error.hint ? '；提示：' + s.error.hint : ''}）` : ''}
+                            </span>
+                            {s.blocked && s.name === 'write_to_file' && (
+                              <Button size="small" appearance="subtle" onClick={() => openWriteConfirm(s.args)} style={{ marginLeft: 6 }}>
+                                预览变更
+                              </Button>
+                            )}
+                            {s.blocked && s.name === 'replace_in_file' && (
+                              <Button size="small" appearance="subtle" onClick={() => openReplaceConfirm(s.args)} style={{ marginLeft: 6 }}>
+                                预览替换
+                              </Button>
+                            )}
+                          </div>
+                          {s.result && (
+                            <details style={{ marginTop: 6 }}>
+                              <summary style={{ cursor: 'pointer', fontSize: 12, color: '#666' }}>查看原始结果</summary>
+                              <pre style={{ margin: 0, whiteSpace: 'pre-wrap', fontSize: 12, background: '#fff', border: '1px solid #eee', borderRadius: 6, padding: 8 }}>
+                                {safeJson(s.result)}
+                              </pre>
+                            </details>
                           )}
-                          {s.blocked && s.name === 'replace_in_file' && (
-                            <Button size="small" appearance="subtle" onClick={() => openReplaceConfirm(s.args)} style={{ marginLeft: 6 }}>
-                              预览替换
-                            </Button>
+                          {s.error?.details && (
+                            <details style={{ marginTop: 6 }}>
+                              <summary style={{ cursor: 'pointer', fontSize: 12, color: '#666' }}>错误详情</summary>
+                              <pre style={{ margin: 0, whiteSpace: 'pre-wrap', fontSize: 12, background: '#fff', border: '1px solid #eee', borderRadius: 6, padding: 8 }}>
+                                {safeJson(s.error.details)}
+                              </pre>
+                            </details>
                           )}
                         </div>
                       ))}
@@ -282,4 +300,8 @@ function shortArgs(a?: any) {
   } catch {
     return '[unserializable]';
   }
+}
+
+function safeJson(obj: any) {
+  try { return JSON.stringify(obj, null, 2); } catch { return '[unserializable]'; }
 }

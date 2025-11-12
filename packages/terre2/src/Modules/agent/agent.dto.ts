@@ -64,6 +64,8 @@ export class ChatStepDto {
   @ApiProperty({ required: false }) args?: any;
   @ApiProperty({ required: false, description: 'Whether the step was blocked (e.g., write/restore requires confirmation)' }) blocked?: boolean;
   @ApiProperty({ required: false, description: 'Short human-readable summary of result or error' }) summary?: string;
+  @ApiProperty({ required: false, description: 'Raw tool result (may be truncated by UI)' }) result?: any;
+  @ApiProperty({ required: false, description: 'Duration in milliseconds' }) durationMs?: number;
   @ApiProperty({ required: false, type: ChatStepErrorDto }) error?: ChatStepErrorDto;
 }
 
