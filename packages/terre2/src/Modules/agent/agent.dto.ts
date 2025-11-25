@@ -34,15 +34,26 @@ export class SetProjectRootDto {
   @ApiProperty({ description: 'Project root directory' })
   projectRoot: string;
 
-  @ApiProperty({ description: 'Enable execution capability', required: false, default: false })
+  @ApiProperty({
+    description: 'Enable execution capability',
+    required: false,
+    default: false,
+  })
   enableExec?: boolean;
 
-  @ApiProperty({ description: 'Enable browser capability', required: false, default: false })
+  @ApiProperty({
+    description: 'Enable browser capability',
+    required: false,
+    default: false,
+  })
   enableBrowser?: boolean;
 }
 
 export class ChatRequestDto {
-  @ApiProperty({ description: 'Existing session id (optional)', required: false })
+  @ApiProperty({
+    description: 'Existing session id (optional)',
+    required: false,
+  })
   sessionId?: string;
 
   @ApiProperty({ description: 'User message' })
@@ -62,11 +73,26 @@ export class ChatStepErrorDto {
 export class ChatStepDto {
   @ApiProperty() name: string;
   @ApiProperty({ required: false }) args?: any;
-  @ApiProperty({ required: false, description: 'Whether the step was blocked (e.g., write/restore requires confirmation)' }) blocked?: boolean;
-  @ApiProperty({ required: false, description: 'Short human-readable summary of result or error' }) summary?: string;
-  @ApiProperty({ required: false, description: 'Raw tool result (may be truncated by UI)' }) result?: any;
-  @ApiProperty({ required: false, description: 'Duration in milliseconds' }) durationMs?: number;
-  @ApiProperty({ required: false, type: ChatStepErrorDto }) error?: ChatStepErrorDto;
+  @ApiProperty({
+    required: false,
+    description:
+      'Whether the step was blocked (e.g., write/restore requires confirmation)',
+  })
+  blocked?: boolean;
+  @ApiProperty({
+    required: false,
+    description: 'Short human-readable summary of result or error',
+  })
+  summary?: string;
+  @ApiProperty({
+    required: false,
+    description: 'Raw tool result (may be truncated by UI)',
+  })
+  result?: any;
+  @ApiProperty({ required: false, description: 'Duration in milliseconds' })
+  durationMs?: number;
+  @ApiProperty({ required: false, type: ChatStepErrorDto })
+  error?: ChatStepErrorDto;
 }
 
 export class ChatResponseDto {
@@ -79,7 +105,11 @@ export class ChatResponseDto {
   @ApiProperty({ description: 'Assistant reply content' })
   content: string;
 
-  @ApiProperty({ description: 'Structured tool call steps (optional)', required: false, type: [ChatStepDto] })
+  @ApiProperty({
+    description: 'Structured tool call steps (optional)',
+    required: false,
+    type: [ChatStepDto],
+  })
   steps?: ChatStepDto[];
 
   @ApiProperty({ description: 'LLM usage info', required: false })
