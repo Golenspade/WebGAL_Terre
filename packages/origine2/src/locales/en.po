@@ -1848,7 +1848,7 @@ msgstr "General dialogue"
 
 #: src/pages/editor/MainArea/EditorToolbar.tsx:100
 msgid "智能助手"
-msgstr ""
+msgstr "AI Assistant"
 
 #: src/pages/editor/MainArea/AgentPanel/components/SnapshotTimeline.tsx:172
 msgid "暂无快照"
