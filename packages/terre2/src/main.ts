@@ -15,13 +15,12 @@ import { AppModule } from './app.module';
 import { _open } from './util/open';
 import { urlencoded, json } from 'express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
-import { env } from 'process';
 import { WsAdapter } from '@nestjs/platform-ws';
 import './logger';
 import * as path from 'path';
 import * as fsExtra from 'fs-extra';
 
-export const version_number = `4.5.16`; // 端口读取移动至 bootstrap，确保先加载 .env
+export const version_number = `4.5.17`; // 端口读取移动至 bootstrap，确保先加载 .env
 
 /**
  * 确保模板文件存在
@@ -71,7 +70,7 @@ async function ensureTemplateFiles() {
       // 确保目标目录存在
       await fsExtra.ensureDir(templateDir);
 
-      // 并行复制文件和目录
+      // 复制文件
       await Promise.all([
         fsExtra.copy(sourceAssetsDir, targetAssetsDir),
         fsExtra.copy(sourceIndex, targetIndex),
@@ -101,7 +100,10 @@ async function loadEnvFiles() {
           if (idx <= 0) continue;
           const key = line.slice(0, idx).trim();
           let value = line.slice(idx + 1).trim();
-          if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith('\'') && value.endsWith('\''))) {
+          if (
+            (value.startsWith('"') && value.endsWith('"')) ||
+            (value.startsWith("'") && value.endsWith("'"))
+          ) {
             value = value.slice(1, -1);
           }
           if (process.env[key] === undefined) {
@@ -114,7 +116,6 @@ async function loadEnvFiles() {
     }
   }
 }
-
 
 async function bootstrap() {
   // 在启动应用前确保模板文件存在
@@ -148,7 +149,10 @@ async function bootstrap() {
   await app.listen(port + 1, '127.0.0.1');
   console.log(`WebGAL Terre ${version_number} starting at ${process.cwd()}`);
   console.log(`[Terre] Listening on http://127.0.0.1:${port + 1}`);
-  if ((process?.env?.NODE_ENV ?? '') !== 'development' && !global['isElectron']) {
+  if (
+    (process?.env?.NODE_ENV ?? '') !== 'development' &&
+    !global['isElectron']
+  ) {
     _open(`http://localhost:${port + 1}`);
   }
 }
