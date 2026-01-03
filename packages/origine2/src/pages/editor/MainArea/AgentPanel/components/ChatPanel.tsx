@@ -1,4 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useMemo } from 'react';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import styles from './chatMarkdown.module.scss';
 import { agentClient } from '@/api/agentClient';
 import { Button, Spinner } from '@fluentui/react-components';
 import { CheckmarkCircle16Filled, DismissCircle16Filled, Warning16Filled } from '@fluentui/react-icons';
@@ -196,7 +199,9 @@ export default function ChatPanel() {
         {messages.map((m, i) => (
           <div key={i} style={{ margin: '8px 0', textAlign: m.role === 'user' ? 'right' : 'left' }}>
             <div style={{ display: 'inline-block', maxWidth: '75%', padding: '8px 10px', borderRadius: 8, background: m.role === 'user' ? '#DCF2FF' : '#F5F5F7' }}>
-              <pre style={{ margin: 0, whiteSpace: 'pre-wrap' }}>{m.content}</pre>
+              <div className={styles.markdown}>
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>{m.content}</ReactMarkdown>
+              </div>
               {m.failed && lastFailedRequest && (
                 <div style={{ marginTop: 6 }}>
                   <ErrorBanner error={{ code: 'E_LLM', message: m.content } as any} onRetry={() => send(lastFailedRequest)} />
