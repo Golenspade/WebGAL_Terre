@@ -1,6 +1,6 @@
 import { ConsoleLogger, Injectable } from '@nestjs/common';
 import * as fs from 'fs/promises';
-import { dirname, extname, join } from 'path';
+import { dirname, extname, join, resolve } from 'path';
 
 export interface IFileInfo {
   name: string;
@@ -21,11 +21,29 @@ interface FileList {
   file: Buffer;
 }
 
-//TODO：安全性问题：访问文件系统前检查是否访问的是进程所在路径下。
-
 @Injectable()
 export class WebgalFsService {
+  private readonly allowedBasePath: string = process.cwd();
+
   constructor(private readonly logger: ConsoleLogger) {}
+
+  /**
+   * Validate that a path is within the allowed base directory
+   * @param targetPath The path to validate
+   * @returns The normalized, validated path
+   * @throws Error if path traversal is detected
+   */
+  private validatePath(targetPath: string): string {
+    const decodedPath = decodeURI(targetPath);
+    const normalizedPath = resolve(decodedPath);
+
+    if (!normalizedPath.startsWith(this.allowedBasePath)) {
+      this.logger.error(`Path traversal attempt detected: ${targetPath}`);
+      throw new Error(`Access denied: path outside allowed directory`);
+    }
+
+    return normalizedPath;
+  }
 
   greet() {
     this.logger.log('Welcome to WebGAl Files System Service!');
@@ -36,7 +54,7 @@ export class WebgalFsService {
    * @param dir 目录，需用 path 处理。
    */
   async getDirInfo(_dir: string): Promise<IFileInfo[]> {
-    const dir = decodeURI(_dir);
+    const dir = this.validatePath(_dir);
     const fileNames = await fs.readdir(dir);
     const dirInfoPromises = fileNames.map((e) => {
       const elementPath = this.getPath(`${dir}/${e}`);
@@ -64,7 +82,9 @@ export class WebgalFsService {
    */
   async copy(src: string, dest: string): Promise<boolean> {
     try {
-      await fs.cp(decodeURI(src), decodeURI(dest), { recursive: true });
+      await fs.cp(this.validatePath(src), this.validatePath(dest), {
+        recursive: true,
+      });
       return true;
     } catch (error) {
       this.logger.error('Copy file failed');
@@ -136,7 +156,7 @@ export class WebgalFsService {
   async deleteFile(path: string) {
     return await new Promise((resolve) => {
       this.logger.log(path);
-      fs.unlink(decodeURI(path))
+      fs.unlink(this.validatePath(path))
         .then(() => resolve('File Deleted'))
         .catch(() => resolve('File not exist!'));
     });
@@ -148,7 +168,7 @@ export class WebgalFsService {
    */
   async deleteFileOrDirectory(_path: string): Promise<boolean> {
     try {
-      const path = decodeURI(_path);
+      const path = this.validatePath(_path);
 
       const stat = await fs.stat(path);
 
@@ -180,7 +200,7 @@ export class WebgalFsService {
     newName: string,
   ): Promise<boolean> {
     try {
-      const path = decodeURI(_path);
+      const path = this.validatePath(_path);
 
       const dir = path.substr(0, path.lastIndexOf('/') + 1);
       const newPath = dir + decodeURI(newName);
@@ -197,7 +217,7 @@ export class WebgalFsService {
    * 检查文件是否存在
    */
   async exists(_path: string): Promise<boolean> {
-    const path = decodeURI(_path);
+    const path = this.validatePath(_path);
 
     return await fs
       .stat(path)
@@ -223,7 +243,7 @@ export class WebgalFsService {
    */
   async createEmptyFile(path: string) {
     try {
-      const decodedPath = decodeURI(path);
+      const decodedPath = this.validatePath(path);
       const directory = dirname(decodedPath);
 
       if (!(await this.existsDir(directory))) {
@@ -245,7 +265,7 @@ export class WebgalFsService {
    */
   async updateTextFile(path: string, content: string) {
     return await new Promise(async (resolve) => {
-      fs.writeFile(decodeURI(path), content)
+      fs.writeFile(this.validatePath(path), content)
         .then(() => resolve('Updated.'))
         .catch(() => resolve('path error or no right.'));
     });
@@ -262,7 +282,7 @@ export class WebgalFsService {
     newText: string | string[],
   ) {
     try {
-      const path = decodeURI(_path);
+      const path = this.validatePath(_path);
 
       const textFile: string | unknown = await this.readTextFile(path);
 
@@ -306,7 +326,7 @@ export class WebgalFsService {
    */
   async readTextFile(path: string) {
     return await new Promise((resolve) => {
-      fs.readFile(decodeURI(path))
+      fs.readFile(this.validatePath(path))
         .then((r) => resolve(r.toString()))
         .catch(() => resolve('file not exist'));
     });
